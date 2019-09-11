@@ -44,7 +44,7 @@
         <axis xyz="0 0 1" />
     </joint>
 
-    <joint name="right_knee_pitch_joint" type="revolute" >
+    <joint name="right_knee_pitch_mimic_joint" type="revolute" >
         <parent link="right_waist_pitch_link" />
         <child link="right_knee_pitch_link" />
         <origin xyz="0.1 0 0" rpy="0 0 0" />
@@ -53,7 +53,7 @@
         <axis xyz="0 0 1" />
     </joint>
 
-    <joint name="right_shin_pitch_joint" type="revolute" >
+    <joint name="right_knee_pitch_joint" type="revolute" >
         <parent link="right_knee_pitch_link" />
         <child link="right_shin_pitch_link" />
         <origin xyz="0.057 0 0" rpy="0 0 0" />
@@ -65,7 +65,7 @@
         <parent link="right_knee_pitch_link" />
         <child link="right_shin_pitch_mimic_link" />
         <origin xyz="0.037 0.032 0" rpy="0 0 0" />
-        <mimic joint="right_shin_pitch_joint" multiplier="1" offset="0" />
+        <mimic joint="right_knee_pitch_joint" multiplier="1" offset="0" />
         <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
         <axis xyz="0 0 1" />
     </joint>
@@ -74,7 +74,7 @@
         <parent link="right_shin_pitch_link" />
         <child link="right_independent_pitch_link" />
         <origin xyz="0.1 0 0" rpy="0 0 0" />
-        <mimic joint="right_shin_pitch_joint" multiplier="-1" offset="0" />
+        <mimic joint="right_knee_pitch_joint" multiplier="-1" offset="0" />
         <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
         <axis xyz="0 0 1" />
     </joint>
