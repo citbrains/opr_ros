@@ -21,3 +21,24 @@ $ roslaunch opr_ros_control position_controller.launch
 ```
 $ roslaunch opr_ros_control trajectory_position_controller.launch
 ```
+
+## Package Structure
+```
+opr_ros_control
+|-CMakeLists.txt
+|-config
+  |-effort_controller.yaml
+  |-gazebo_controller.yaml
+  |-joint_state_controller.yaml
+  |-position_controller.yaml
+  |-trajectory_effort_controller.yaml
+  |-trajectory_position_controller.yaml
+|-launch
+  |-effort_controller.launch
+  |-gazebo_controller.launch
+  |-position_controller.launch
+  |-trajectory_effort_controller.launch
+  |-trajectory_position_controller.launch
+|-package.xml
+|-README.md
+```
