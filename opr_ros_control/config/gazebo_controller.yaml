@@ -70,6 +70,41 @@ gazebo_ros_control:
       i_clamp: 0.2
       antiwindup: false
       publish_state: true
+    left_waist_roll_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_waist_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_knee_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_shin_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_ankle_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
     right_shoulder_joint:
       p: 100.0
       i: 0.01
@@ -133,4 +168,38 @@ gazebo_ros_control:
       i_clamp: 0.2
       antiwindup: false
       publish_state: true
-
+    right_waist_roll_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_waist_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_knee_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_shin_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_ankle_pitch_mimic_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true

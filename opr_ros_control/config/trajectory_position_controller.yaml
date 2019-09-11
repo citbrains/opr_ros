@@ -1,0 +1,122 @@
+head_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - head_yaw_joint
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  10
+  action_monitor_rate: 10
+
+left_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - left_shoulder_joint
+    - left_arm_joint
+    - left_hand_joint
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    left_shoulder_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_arm_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_hand_joint:
+      trajectory: 1.0
+      goal: 1.0
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  10
+  action_monitor_rate: 10
+
+left_leg_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - left_waist_yaw_joint
+    - left_waist_roll_joint
+    - left_waist_pitch_joint
+    - left_knee_pitch_joint
+    - left_ankle_pitch_joint
+    - left_ankle_roll_joint
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    left_waist_yaw_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_waist_roll_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_waist_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_knee_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_ankle_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    left_ankle_roll_joint:
+      trajectory: 1.0
+      goal: 1.0
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  10
+  action_monitor_rate: 10
+
+right_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - right_shoulder_joint
+    - right_arm_joint
+    - right_hand_joint
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    right_shoulder_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_arm_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_hand_joint:
+      trajectory: 1.0
+      goal: 1.0
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  10
+  action_monitor_rate: 10
+
+right_leg_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - right_waist_yaw_joint
+    - right_waist_roll_joint
+    - right_waist_pitch_joint
+    - right_knee_pitch_joint
+    - right_ankle_pitch_joint
+    - right_ankle_roll_joint
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    right_waist_yaw_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_waist_roll_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_waist_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_knee_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_ankle_pitch_joint:
+      trajectory: 1.0
+      goal: 1.0
+    right_ankle_roll_joint:
+      trajectory: 1.0
+      goal: 1.0
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  10
+  action_monitor_rate: 10

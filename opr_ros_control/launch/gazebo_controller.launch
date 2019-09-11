@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- load gazebo configuration only when position or trajectory position controllers are used -->
+    <rosparam file="$(find opr_ros_control)/config/gazebo_controller.yaml" command="load"/>
+
+</launch>

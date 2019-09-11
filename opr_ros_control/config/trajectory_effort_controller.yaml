@@ -1,0 +1,15 @@
+head_controller:
+  type: effort_controllers/JointTrajectoryController
+  state_publish_rate: 10
+  joints:
+    - head_yaw_joint
+  gains:
+    head_yaw_joint: {p: 100.0, i: 0.01, d: 100.0}
+
+left_arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  state_publish_rate: 10
+  joints:
+    - left_shoulder_joint
+  gains:
+    head_yaw_joint: {p: 100.0, i: 0.01, d: 100.0}
