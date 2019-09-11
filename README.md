@@ -9,7 +9,9 @@ $ mkdir -p catkin_ws/src
 ```
 3. clone repository
 ```
+$ cd ~/catkin_ws/src
 $ git clone git@github.com:citbrains/opr_ros.git
+$ rosdep install --from-paths opr_ros --ignore-src --rosdistro kinetic
 ```
 4. build and source
 ```
