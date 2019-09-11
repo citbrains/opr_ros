@@ -5,7 +5,7 @@ ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Kinetic
 1. Install ros
 2. create ROS workspace
 ```
-$ mkdir -p catkin_ws/src
+$ mkdir -p ~/catkin_ws/src
 ```
 3. clone repository
 ```
@@ -35,5 +35,5 @@ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robot
   * collection of gazebo related files
 * opr_ros
   * package to build other package
-* opr_ros
+* opr_ros_control
   * collection of ros controllers
