@@ -31,5 +31,9 @@ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robot
   * collection of launch files to bring up actual robot and robot simulation
 * opr_description
   * collection of robot model's urdf, CAD data (stl), collada data (dae)
+* opr_gazebo
+  * collection of gazebo related files
 * opr_ros
   * package to build other package
+* opr_ros
+  * collection of ros controllers
