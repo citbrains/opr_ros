@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 	<!-- arguements that can be passed in this launch file-->
+	<arg name="model" />
 	<arg name="paused" default="true" />
 	<arg name="use_sim_time" default="false" />
 	<arg name="gui" default="true" />
@@ -17,7 +18,6 @@
 	</include>
 
 	<!--load the URDF into ROS parameter server -->
-	<arg name="model" />
 	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
 	<!-- run python script to the send a service call to gazebo_ros to spawn a URDF robot-->
