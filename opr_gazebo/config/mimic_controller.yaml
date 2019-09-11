@@ -1,0 +1,136 @@
+gazebo_ros_control:
+  pid_gains:
+    head_yaw_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_shoulder_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_arm_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_hand_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_waist_yaw_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_waist_roll_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_waist_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_knee_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_ankle_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    left_ankle_roll_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_shoulder_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_arm_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_hand_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_waist_yaw_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_waist_roll_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_waist_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_knee_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_ankle_pitch_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+    right_ankle_roll_joint:
+      p: 100.0
+      i: 0.01
+      d: 100.0
+      i_clamp: 0.2
+      antiwindup: false
+      publish_state: true
+
