@@ -1,0 +1,5 @@
+- git:
+    local-name: roboticsgroup_gazebo_plugins
+    uri: git@github.com:citbrains/robotics_group_gazebo_plugins.git
+    version: master
+

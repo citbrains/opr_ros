@@ -11,6 +11,9 @@ $ mkdir -p ~/catkin_ws/src
 ```
 $ cd ~/catkin_ws/src
 $ git clone git@github.com:citbrains/opr_ros.git
+$ wstool init .
+$ wstool merge opr_ros/opr_ros.rosinstall
+$ wstool update
 $ rosdep install --from-paths opr_ros --ignore-src --rosdistro kinetic
 ```
 4. build and source

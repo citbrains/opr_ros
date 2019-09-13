@@ -3,6 +3,9 @@
 ## Overview
 * package for Gazebo simulation
 
+## Dependency
+* [mimic plugin for gazebo](https://github.com/citbrains/roboticsgroup_gazebo_plugins)
+
 ## Usage
 * view empty world on gazebo with robot model
 ```
