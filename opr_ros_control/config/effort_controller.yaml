@@ -6,17 +6,17 @@ head_yaw_controller:
 left_shoulder_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: left_shoulder_joint
+  joint: left_shoulder_pitch_joint
 
 left_arm_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: left_arm_joint
+  joint: left_shoulder_roll_joint
 
 left_hand_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: left_hand_joint
+  joint: left_elbow_pitch_joint
 
 left_waist_yaw_controller:
   type: effort_controllers/JointPositionController
@@ -51,17 +51,17 @@ left_ankle_roll_controller:
 right_shoulder_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: right_shoulder_joint
+  joint: right_shoulder_pitch_joint
 
 right_arm_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: right_arm_joint
+  joint: right_shoulder_roll_joint
 
 right_hand_controller:
   type: effort_controllers/JointPositionController
   pid: {p: 100.0, i: 0.01, d: 100.0}
-  joint: right_hand_joint
+  joint: right_elbow_pitch_joint
 
 right_waist_yaw_controller:
   type: effort_controllers/JointPositionController

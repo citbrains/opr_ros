@@ -14,11 +14,11 @@
         </transmission>
     </xacro:macro>
 
-    <xacro:arm_transmission name="left_shoulder"/>
-    <xacro:arm_transmission name="left_arm"/>
-    <xacro:arm_transmission name="left_hand"/>
-    <xacro:arm_transmission name="right_shoulder"/>
-    <xacro:arm_transmission name="right_arm"/>
-    <xacro:arm_transmission name="right_hand"/>
+    <xacro:arm_transmission name="left_shoulder_pitch"/>
+    <xacro:arm_transmission name="left_shoulder_roll"/>
+    <xacro:arm_transmission name="left_elbow_pitch"/>
+    <xacro:arm_transmission name="right_shoulder_pitch"/>
+    <xacro:arm_transmission name="right_shoulder_roll"/>
+    <xacro:arm_transmission name="right_elbow_pitch"/>
 
 </robot>

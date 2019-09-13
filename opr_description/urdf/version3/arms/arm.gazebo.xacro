@@ -14,10 +14,10 @@
     </xacro:macro>
     
     <xacro:arm_reference name="left_shoulder_link"/>
-    <xacro:arm_reference name="left_arm_link"/>
-    <xacro:arm_reference name="left_hand_link"/>
+    <xacro:arm_reference name="left_upper_arm_link"/>
+    <xacro:arm_reference name="left_lower_arm_link"/>
     <xacro:arm_reference name="right_shoulder_link"/>
-    <xacro:arm_reference name="right_arm_link"/>
-    <xacro:arm_reference name="right_hand_link"/>
+    <xacro:arm_reference name="right_upper_arm_link"/>
+    <xacro:arm_reference name="right_lower_arm_link"/>
 
 </robot>

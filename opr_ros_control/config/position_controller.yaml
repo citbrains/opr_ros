@@ -8,19 +8,19 @@ left_shoulder_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: left_shoulder_joint
+  joint: left_shoulder_pitch_joint
 
 left_arm_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: left_arm_joint
+  joint: left_shoulder_roll_joint
 
 left_hand_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: left_hand_joint
+  joint: left_elbow_pitch_joint
 
 left_waist_yaw_controller:
   type: position_controllers/JointPositionController
@@ -62,19 +62,19 @@ right_shoulder_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: right_shoulder_joint
+  joint: right_shoulder_pitch_joint
 
 right_arm_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: right_arm_joint
+  joint: right_shoulder_roll_joint
 
 right_hand_controller:
   type: position_controllers/JointPositionController
   publish_rate: 10
   base_frame_id: base_link
-  joint: right_hand_joint
+  joint: right_elbow_pitch_joint
 
 right_waist_yaw_controller:
   type: position_controllers/JointPositionController

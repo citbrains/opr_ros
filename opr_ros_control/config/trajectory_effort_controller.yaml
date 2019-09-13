@@ -10,13 +10,13 @@ left_arm_controller:
   type: effort_controllers/JointTrajectoryController
   state_publish_rate: 10
   joints:
-    - left_shoulder_joint
-    - left_arm_joint
-    - left_hand_joint
+    - left_shoulder_pitch_joint
+    - left_shoulder_roll_joint
+    - left_elbow_pitch_joint
   gains:
-    left_shoulder_joint: {p: 100.0, i: 0.01, d: 100.0}
-    left_arm_joint: {p: 100.0, i: 0.01, d: 100.0}
-    left_hand_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_shoulder_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_shoulder_roll_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_elbow_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
 
 left_leg_controller:
   type: effort_controllers/JointTrajectoryController
@@ -40,10 +40,10 @@ right_arm_controller:
   type: effort_controllers/JointTrajectoryController
   state_publish_rate: 10
   joints:
-    - right_shoulder_joint
-    - right_arm_joint
-    - right_hand_joint
+    - right_shoulder_pitch_joint
+    - right_shoulder_roll_joint
+    - right_elbow_pitch_joint
   gains:
-    right_shoulder_joint: {p: 100.0, i: 0.01, d: 100.0}
-    right_arm_joint: {p: 100.0, i: 0.01, d: 100.0}
-    right_hand_joint: {p: 100.0, i: 0.01, d: 100.0}
+    right_shoulder_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
+    right_shoulder_roll_joint: {p: 100.0, i: 0.01, d: 100.0}
+    right_elbow_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
