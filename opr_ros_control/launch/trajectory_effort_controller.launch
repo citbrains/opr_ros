@@ -5,7 +5,7 @@
     <rosparam file="$(find opr_ros_control)/config/joint_state_controller.yaml" command="load"/>
    
     <!-- load controllers -->
-    <node name="controller_spawner" pkg="controller_managaer" type="spawner" respawn="false" output="screen" 
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
         args="joint_state_controller
               head_controller
               left_arm_controller
