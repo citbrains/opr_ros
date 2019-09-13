@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
     <!-- load joint controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find opr_ros_control)/config/effort_controller.yaml" command="load"/>
-    <rosparam file="$(find opr_ros_control)/config/joint_state_controller.yaml" command="load"/>
+    <rosparam file="$(find opr_ros_control)/config/version3/effort_controller.yaml" command="load"/>
+    <rosparam file="$(find opr_ros_control)/config/version3/joint_state_controller.yaml" command="load"/>
    
     <!-- load controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
