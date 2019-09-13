@@ -11,5 +11,39 @@ left_arm_controller:
   state_publish_rate: 10
   joints:
     - left_shoulder_joint
+    - left_arm_joint
+    - left_hand_joint
   gains:
-    head_yaw_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_shoulder_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_arm_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_hand_joint: {p: 100.0, i: 0.01, d: 100.0}
+
+left_leg_controller:
+  type: effort_controllers/JointTrajectoryController
+  state_publish_rate: 10
+  joints:
+    - left_waist_yaw_joint
+    - left_waist_roll_joint
+    - left_waist_pitch_joint
+    - left_knee_pitch_joint
+    - left_ankle_pitch_joint
+    - left_ankle_roll_joint
+  gains:
+    left_waist_yaw_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_waist_roll_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_waist_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_knee_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_ankle_roll_joint: {p: 100.0, i: 0.01, d: 100.0}
+    left_ankle_pitch_joint: {p: 100.0, i: 0.01, d: 100.0}
+
+right_arm_controller:
+  type: effort_controllers/JointTrajectoryController
+  state_publish_rate: 10
+  joints:
+    - right_shoulder_joint
+    - right_arm_joint
+    - right_hand_joint
+  gains:
+    right_shoulder_joint: {p: 100.0, i: 0.01, d: 100.0}
+    right_arm_joint: {p: 100.0, i: 0.01, d: 100.0}
+    right_hand_joint: {p: 100.0, i: 0.01, d: 100.0}

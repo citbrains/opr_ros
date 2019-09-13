@@ -6,14 +6,14 @@
     <!-- load gazebo controller -->
     <include file="$(find opr_ros_control)/launch/gazebo_controller.launch" />
 
+    <!-- load ros controller -->
+    <include file="$(find opr_ros_control)/launch/trajectory_position_controller.launch" />
+
     <!-- load gazebo -->
     <include file="$(find opr_gazebo)/launch/gazebo.launch">
         <arg name="model" value="$(arg model)" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="paused" value="false" />
     </include>
 
-    <!-- load ros controller -->
-    <include file="$(find opr_ros_control)/launch/position_controller.launch" />
-
-    <!-- launch rviz -->
-    <node name="rviz" pkg="rviz" type="rviz" />
 </launch>

@@ -23,7 +23,7 @@
         <child link="right_slider_crank_link" />
         <origin xyz="-0.018 0 -0.091475" rpy="0 0 0" />
         <mimic joint="right_waist_roll_joint" multiplier="-2" offset="0" />
-        <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="2.0" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -75,7 +75,7 @@
         <child link="right_independent_pitch_link" />
         <origin xyz="0.1 0 0" rpy="0 0 0" />
         <mimic joint="right_knee_pitch_joint" multiplier="-1" offset="0" />
-        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="1.0" />
         <axis xyz="0 0 1" />
     </joint>
 
