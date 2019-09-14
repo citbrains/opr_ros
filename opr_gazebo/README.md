@@ -5,12 +5,12 @@
 
 ## Dependency
 * [mimic plugin for gazebo](https://github.com/citbrains/roboticsgroup_gazebo_plugins)
-* Gazebo 7+ ***to use camera on gazebo***
-  * gazebo `version 7.0.0` has camera bug
+* Gazebo 7.0+
+  * gazebo `version 7.0.0` has ***camera bug***
     * check gazebo version with `$ gazebo -v`
 
-## upgrade gazebo
-if you have gazebo version 7.0.0 run the following command to upgrade the  gazebo
+## Upgrade Gazebo
+if you have gazebo version 7.0.0 run the following command to upgrade gazebo
 ```
 $ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 $ wget http://packages.osrfoundation.org/gazebo.key
