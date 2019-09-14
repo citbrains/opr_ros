@@ -24,9 +24,13 @@ $ source ~/catkin_ws/devel/setup.bash
 ```
 
 ## Usage
-To view URDF model on RViz
+* View URDF model on RViz
 ```
-roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robots/gankenkun_v3.xacro' gui:=true
+$ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robots/gankenkun_v3.xacro' gui:=true
+```
+* Gazebo Simulation
+```
+$ roslaunch opr_bringup simulation.launch
 ```
 
 ## Package Description
