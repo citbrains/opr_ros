@@ -34,10 +34,8 @@ opr_ros_control
   |-trajectory_effort_controller.yaml
   |-trajectory_position_controller.yaml
 |-launch
-  |-effort_controller.launch
   |-gazebo_controller.launch
   |-position_controller.launch
-  |-trajectory_effort_controller.launch
   |-trajectory_position_controller.launch
 |-package.xml
 |-README.md
