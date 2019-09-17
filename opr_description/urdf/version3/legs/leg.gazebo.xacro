@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <xacro:macro name="mimic_joint_plugin" params="name parent multiplier:=1.0 offset:=0 sensitiveness:=0.0 max_effort:=1000.0">
+        <gazebo>
+            <plugin name="${name}_mimic_joint_plugin" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+                <joint>${parent}_joint</joint>
+                <mimicJoint>${name}_joint</mimicJoint>
+                <hasPID/>
+                <multiplier>${multiplier}</multiplier>
+                <offset>${offset}</offset>
+                <sensitiveness>${sensitiveness}</sensitiveness>
+                <maxEffort>${max_effort}</maxEffort>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="leg_reference" params="name">
+        <gazebo reference="${name}_link">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+            <kp>1000000.0</kp>
+            <kd>100.0</kd>
+            <gravity>false</gravity>
+            <minDepth>0.001</minDepth>
+            <maxVel>1.0</maxVel>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:leg_reference name="left_waist_yaw" />
+    <xacro:leg_reference name="left_waist_roll" />
+    <xacro:leg_reference name="left_slider_crank" />
+    <xacro:leg_reference name="left_waist_pitch" />
+    <xacro:leg_reference name="left_waist_pitch_mimic" />
+    <xacro:leg_reference name="left_knee_pitch" />
+    <xacro:leg_reference name="left_shin_pitch" />
+    <xacro:leg_reference name="left_shin_pitch_mimic" />
+    <xacro:leg_reference name="left_independent_pitch" />
+    <xacro:leg_reference name="left_ankle_pitch" />
+    <xacro:leg_reference name="left_ankle_roll" />
+    <xacro:leg_reference name="left_foot" />
+
+    <xacro:mimic_joint_plugin name="left_waist_roll_mimic" parent="left_waist_roll" multiplier="-2"  />
+    <xacro:mimic_joint_plugin name="left_waist_pitch_mimic" parent="left_waist_pitch" multiplier="1"  />
+    <xacro:mimic_joint_plugin name="left_knee_pitch_mimic" parent="left_waist_pitch" multiplier="-1"  />
+    <xacro:mimic_joint_plugin name="left_shin_pitch_mimic" parent="left_knee_pitch" multiplier="1"  />
+    <xacro:mimic_joint_plugin name="left_ankle_pitch_mimic" parent="left_knee_pitch" multiplier="-1"  />
+
+    <xacro:leg_reference name="right_waist_yaw" />
+    <xacro:leg_reference name="right_waist_roll" />
+    <xacro:leg_reference name="right_slider_crank" />
+    <xacro:leg_reference name="right_waist_pitch" />
+    <xacro:leg_reference name="right_waist_pitch_mimic" />
+    <xacro:leg_reference name="right_knee_pitch" />
+    <xacro:leg_reference name="right_shin_pitch" />
+    <xacro:leg_reference name="right_shin_pitch_mimic" />
+    <xacro:leg_reference name="right_independent_pitch" />
+    <xacro:leg_reference name="right_ankle_pitch" />
+    <xacro:leg_reference name="right_ankle_roll" />
+    <xacro:leg_reference name="right_foot" />
+
+    <xacro:mimic_joint_plugin name="right_waist_roll_mimic" parent="right_waist_roll" multiplier="-2"  />
+    <xacro:mimic_joint_plugin name="right_waist_pitch_mimic" parent="right_waist_pitch" multiplier="1"  />
+    <xacro:mimic_joint_plugin name="right_knee_pitch_mimic" parent="right_waist_pitch" multiplier="-1"  />
+    <xacro:mimic_joint_plugin name="right_shin_pitch_mimic" parent="right_knee_pitch" multiplier="1"  />
+    <xacro:mimic_joint_plugin name="right_ankle_pitch_mimic" parent="right_knee_pitch" multiplier="-1"  />
+
+</robot>

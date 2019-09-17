@@ -9,7 +9,8 @@
 
     <!-- import empty link -->
     <link name="base_link"/>
-    <!-- uncomment this part to fixed the body in space (ignore gravity)
+    <!-- uncomment this part to fixed the body in space (ignore gravity) -->
+    <!--
     <link name="world"/>
     <joint name="world2base" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -29,7 +30,17 @@
     <xacro:include filename="$(find opr_description)/urdf/version3/sensors/imu/imu.urdf.xacro"/>
 
     <!-- Import transmission -->
+    <xacro:include filename="$(find opr_description)/urdf/version3/head/head.transmission.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/arms/arm.transmission.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/legs/leg.transmission.xacro"/>
 
     <!-- Import gazebo plugin -->
+    <xacro:include filename="$(find opr_description)/urdf/gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/body/body.gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/head/head.gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/arms/arm.gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/legs/leg.gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/sensors/camera/camera.gazebo.xacro"/>
+    <xacro:include filename="$(find opr_description)/urdf/version3/sensors/imu/imu.gazebo.xacro"/>
 
 </robot>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- model arguement -->
+    <arg name="model" default="$(find opr_description)/robots/gankenkun_v3.xacro" />
+    
+    <!-- load gazebo controller -->
+    <include file="$(find opr_ros_control)/launch/gazebo_controller_v3.launch" />
+
+    <!-- load ros controller -->
+    <include file="$(find opr_ros_control)/launch/trajectory_position_controller_v3.launch" />
+
+    <!-- load gazebo -->
+    <include file="$(find opr_gazebo)/launch/gazebo.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="use_sim_time" value="true" />
+        <arg name="paused" value="false" />
+    </include>
+
+</launch>

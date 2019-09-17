@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find opr_ros_control)/config/version3/trajectory_position_controller.yaml" command="load"/>
+    <rosparam file="$(find opr_ros_control)/config/version3/joint_state_controller.yaml" command="load"/>
+   
+    <!-- load controllers -->
+    <node name="opr_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" 
+        args="joint_state_controller
+              head_controller
+              left_arm_controller
+              left_leg_controller
+              right_arm_controller
+              right_leg_controller
+    " />
+
+</launch>

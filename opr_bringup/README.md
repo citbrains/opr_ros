@@ -8,7 +8,10 @@
 ```
 $ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robots/gankenkun_v3.xacro' gui:=true
 ```
-
+* To simulate robot on gazebo ***recommended to view with GPU***
+```
+$ roslaunch opr_bringup simulation.launch
+```
 ## Package Structure
 ```
 opr_bringup

@@ -9,5 +9,6 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>opr_bringup</build_depend>
   <build_depend>opr_description</build_depend>
+  <build_depend>opr_ros_control</build_depend>
 
 </package>
