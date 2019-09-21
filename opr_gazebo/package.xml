@@ -9,11 +9,11 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>gazebo_ros</build_depend>
   <build_depend>gazebo_ros_control</build_depend>
-  <build_depend>roboticsgroup_gazebo_plugins</build_depend>
   <build_export_depend>gazebo_ros</build_export_depend>
   <build_export_depend>gazebo_ros_control</build_export_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>gazebo_ros_control</exec_depend>
+  <exec_depend>roboticsgroup_gazebo_plugins</exec_depend>
 
   <export>
     <!--

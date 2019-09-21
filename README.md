@@ -10,7 +10,7 @@ $ mkdir -p ~/catkin_ws/src
 3. clone repository
 ```
 $ cd ~/catkin_ws/src
-$ git clone git@github.com:citbrains/opr_ros.git
+$ git clone https://github.com/citbrains/opr_ros.git
 $ wstool init .
 $ wstool merge opr_ros/opr_ros.rosinstall
 $ wstool update
