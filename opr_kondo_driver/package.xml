@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>opr_kondo_driver</name>
+  <version>0.0.0</version>
+  <description>The opr_kondo_driver package</description>
+  <maintainer email="supratmanjoshua@gmail.com">jsupratman13</maintainer>
+  <license>Apache License, Version 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>hardware_interface</build_depend>
+  <build_depend>joint_state_controller</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>position_controllers</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_export_depend>hardware_interface</build_export_depend>
+  <build_export_depend>joint_state_controller</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>hardware_interface</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>position_controllers</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+
+</package>
