@@ -52,12 +52,26 @@ int b3m_init(B3MData * r, const char* serial_port)
 
 	struct termios tio;
 
-	r->fd = open(serial_port, O_RDWR);
+	r->fd = open(serial_port, O_RDWR | O_NOCTTY);
 	if (ioctl(r->fd, TCGETS, &tio)){
 		b3m_error(r, "Get serial port parameters");
 	}
-	tio.c_cflag &= ~CBAUD;
-	tio.c_cflag |= B3M_BAUD;
+
+	tio.c_cflag &= ~CBAUD;          // clear mask for setting baud rate
+	tio.c_cflag &= ~PARENB;         // set no parity
+	tio.c_cflag &= ~CSTOPB;         // 1 stop bit
+	tio.c_cflag &= ~CSIZE;          // clear mask for setting the data size
+	tio.c_cflag |= B3M_BAUD;        // set B3M baud
+	tio.c_cflag |= CS8;             // character size 8 bit
+	tio.c_cflag |= CREAD;           // enable receiver
+	tio.c_cflag |= CLOCAL;          // ignore modem status line
+	tio.c_iflag = IGNBRK | IGNPAR;  // ignore break condition and characer with parity error
+	tio.c_oflag = 0;                // raw mode
+	tio.c_lflag = 0;                // noncanonical input
+	tio.c_cc[VMIN] = 0;             // 0 return all else until n byte received
+	tio.c_cc[VTIME] = 1;            // 0 block forever else until n tenth second
+	tcflush(r->fd, TCIOFLUSH);      // flush current port setting
+
 	if (ioctl(r->fd, TCSETS, &tio)){
 		b3m_error(r, "Set serial port parameters");
 	}
@@ -154,6 +168,7 @@ int b3m_read_timeout(B3MData * r, int n, long usecs)
 	// spam the read until data arrives
 	do {
 	    if ((i = read(r->fd, &(r->swap[bytes_read]), n - bytes_read)) < 0) {
+	    //if ((i = read(r->fd, &(r->swap[bytes_read]), sizeof(&(r->swap[bytes_read])))) < 0) {
 			b3m_error(r, "Read data");
 	    }
 	    bytes_read += i;
@@ -270,6 +285,23 @@ int b3m_com_send(B3MData * r, UINT id, UINT address, UCHAR *data, int byte)
 	return r->swap[2];
 }
 
+/*!
+ * @brief servo torque on or off
+ *
+ * @param[in] id the servo id, 0-255 (255: broadcast)
+ * @param[in] 0 for off, 1 for on
+ * @return error status.
+ */
+int b3m_set_torque(B3MData * r, UINT id, short smode)
+{
+	assert(r);
+
+	short mode = (smode == 0) ? B3M_OPTIONS_RUN_FREE : B3M_OPTIONS_RUN_NORMAL;
+	UCHAR data[1];
+	data[0] = mode;
+
+	return b3m_com_send(r, id, B3M_SERVO_TORQUE_ON, data, 1);
+}
 
 /*!
  * @brief get status from servo motors
@@ -312,6 +344,72 @@ int b3m_get_status(B3MData * r, UINT id, UINT address, UCHAR *data, int byte)
 	return r->swap[2];
 }
 
+/*!
+ * @brief reset servo motors
+ *
+ * @param[in] id servo id, 0-255 (255: broadcast)
+ */
+int b3m_reset_error(B3MData * r, UINT id)
+{
+	assert(r);
+	int i, n = 0;
+	int sum = 0, time = 0;
+
+	// build command
+	r->swap[n++] = 6;                       // length
+	r->swap[n++] = B3M_CMD_RESET;           // command
+	r->swap[n++] = B3M_RETURN_ERROR_STATUS; // option
+	r->swap[n++] = id;                      // id
+	r->swap[n++] = time;                    //time
+	for(i = 0; i < n; i ++){
+		sum += r->swap[i];
+	}
+	r->swap[n] = sum & 0xff;
+
+	// synchronize with servo
+	if ((i = b3m_trx_timeout(r, 6, 5, B3M_POS_TIMEOUT)) < 0)
+		return i;
+
+	// return error status
+	return r->swap[2];
+}
+
+/*!
+ * @brief set servo position
+ *
+ * @param[in] id the servo id, 0-255 (255: broadcast)
+ * @param[in] pos the position to set (angle * 100)
+ * @param[in] time it take to pos (ms) max speed for normal mode
+ * @return error status.
+ */
+int b3m_set_position(B3MData * r, UINT id, int deg100, int ms)
+{
+	assert(r);
+
+	int i, n = 0;
+	int sum = 0, time = 0;
+
+	// build command
+	r->swap[n++] = 9;                      // length
+	r->swap[n++] = B3M_CMD_POSITION;       // command
+	r->swap[n++] = B3M_RETURN_ERROR_STATUS;// option
+	r->swap[n++] = id;                     // id
+	r->swap[n++] = deg100 & 0xff;          // angle
+	r->swap[n++] = deg100 >> 8;
+	r->swap[n++] = ms & 0xff;              // time
+	r->swap[n++] = ms >> 8; 
+	for(i = 0; i < n; i ++){
+		sum += r->swap[i];
+	}
+	r->swap[n] = sum & 0xff;
+
+	// synchronize with servo
+	if ((i = b3m_trx_timeout(r, 9, 5, B3M_POS_TIMEOUT)) < 0)
+		return i;
+
+	// return error status
+	return r->swap[2];
+}
 
 /*!
  * @brief set servo position
@@ -398,6 +496,23 @@ int b3m_set_angle_velocity(B3MData * r, UINT id, int *deg100, int velocity_deg10
 	return b3m_set_angle_period(r, id, deg100, period_ms);
 }
 
+/*!
+ * @brief set servo velocity
+ *
+ * @param[in] id the servo id, 0-255 (255: broadcast)
+ * @param[in] velocity to set (vel * 100)
+ * @return error status.
+ */
+int b3m_set_velocity(B3MData * r, UINT id, int vel100)
+{
+	assert(r);
+
+	UCHAR data[2];
+	data[0] = vel100 & 0xff;
+	data[1] = vel100 >> 8;
+
+	return b3m_com_send(r, id, B3M_SERVO_DESIRED_VELOSITY, data, 2);
+}
 
 /*!
  * @brief set trajectory mode
