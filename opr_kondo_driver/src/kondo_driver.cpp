@@ -38,6 +38,8 @@ class KondoMotor
         int curr_limit;
         int temp_limit;
         int min_angle, max_angle;
+        int dir;
+        double offset;
     public:
         double cmd, pos, vel, eff;
         std::string joint_name;
@@ -51,7 +53,7 @@ class KondoMotor
         }
 */
 
-        KondoMotor (B3MData* b3m, std::string actuator_name, hardware_interface::JointStateInterface& state_interface, hardware_interface::PositionJointInterface& pos_interface) : cmd(0), pos(0), vel(0), eff(0) {
+        KondoMotor (B3MData* b3m, std::string actuator_name, hardware_interface::JointStateInterface& state_interface, hardware_interface::PositionJointInterface& pos_interface) : cmd(0), pos(0), vel(0), eff(0), offset(0), dir(1) {
             motor_power = true;
             this->b3m = b3m;
             ros::NodeHandle nh(std::string("~")+actuator_name);
@@ -89,6 +91,15 @@ class KondoMotor
                 ROS_INFO("temperature_limit: %d", temp_limit);
                 set_temperature_limit(temp_limit * 100);
             }
+            if (nh.getParam("offset", offset)) {
+                ROS_INFO("offset: %d", offset);
+                cmd = offset;
+                pos = offset;
+            }
+            if (nh.getParam("direction", dir)) {
+                ROS_INFO("dir: %d", dir);
+            }
+
             hardware_interface::JointStateHandle state_handle(joint_name, &pos, &vel, &eff);
             state_interface.registerHandle(state_handle);
             hardware_interface::JointHandle pos_handle(state_interface.getHandle(joint_name), &cmd);
@@ -107,28 +118,30 @@ class KondoMotor
                 radian = max_angle * 3.14 / 180;
             }
             if (motor_power == true) {
-                deg100 = radian_to_deg100(radian);
+                radian = radian + offset;
+                deg100 = dir * radian_to_deg100(radian);
             }
             else{
                 b3m_set_angle(b3m, id, deg100);
                 b3m_get_angle(b3m, id, &deg100);
-                pos = deg100_to_radian(deg100);
-                eff = pos - radian; 
+                pos = dir * (deg100_to_radian(deg100) - offset);
 
-              if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
-                  pos = deg100_to_radian(deg100);
-              }
+                #if 0
+                if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
+                   pos = deg100_to_radian(deg100);
+                }
 
-              /* get speed */
-              vel = 0;
-              if (!b3m_get_velocity(b3m, id, &deg100)){
+                /* get speed */
+                vel = 0;
+                if (!b3m_get_velocity(b3m, id, &deg100)){
                   vel = deg100_to_radian(deg100);
-              }
+                }
 
-              /* get servo current */
-              int pwm_duty_ratio;
-              b3m_get_pwm_duty_ratio(b3m, id, &pwm_duty_ratio);
-              eff = pwm_duty_ratio;
+                /* get servo current */
+                int pwm_duty_ratio;
+                b3m_get_pwm_duty_ratio(b3m, id, &pwm_duty_ratio);
+                eff = pwm_duty_ratio;
+                #endif
             }
         }
 
