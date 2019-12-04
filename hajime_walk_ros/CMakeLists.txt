@@ -21,7 +21,7 @@ set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -ldl")
 
 FIND_PACKAGE(Boost COMPONENTS system thread filesystem)
 add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
-add_subdirectory(RTIMULib)
+#add_subdirectory(RTIMULib)
 
 #set(ICE_DIR $ENV{ICE_HOME} CACHE PATH "ZeroC ICE installation dir(Default: $ICE_HOME)")
 
@@ -40,7 +40,6 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${BOOST_INCLUDE_DIRS}
 	${Boost_INCLUDE_DIR}
-	RTIMULib
     ${catkin_INCLUDE_DIRS}
 )
 
@@ -48,7 +47,6 @@ link_directories(
 	${ICE_DIR}/lib
 	${Boost_LIBRARY_DIRS}
 	${Boost_LIBRARY_DIR}
-	RTIMULib
 )
 
 set(HR46_B3M_SRCS
@@ -84,7 +82,6 @@ SET(hr46_b3m_LIBRARIES
 target_link_libraries(hajime_walk
 	${Boost_LIBRARIES}
 	${hr46_b3m_LIBRARIES}
-	RTIMULib
     ${catkin_LIBRARIES}
 )
 

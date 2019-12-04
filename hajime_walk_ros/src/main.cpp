@@ -21,7 +21,7 @@
 /*--------------------------------------*/
 
 #include <ros/ros.h>
-#include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/Float64.h>
 
 #include    <stdio.h>
 #include    <assert.h>
@@ -256,17 +256,35 @@ int main( int argc, char *argv[] )
     ros::NodeHandle nh;
 
     //ros::Subscriber sub = nh.subscribe("/walk_command", 1000, strideCallback);
-    ros::Publisher pub = nh.advertise<std_msgs::Float64MultiArray>("/joint_angles", 2);
-    std_msgs::Float64MultiArray joint_angles;
-    joint_angles.data.resize(SERV_NUM);
+    ros::Publisher left_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/left_ankle_pitch_controller/command", 1);
+    ros::Publisher left_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/left_ankle_roll_controller/command", 1);
+    ros::Publisher left_elbow_pitch_pub = nh.advertise<std_msgs::Float64>("/left_elbow_pitch_controller/command", 1);
+    ros::Publisher left_knee_pitch_pub = nh.advertise<std_msgs::Float64>("/left_knee_pitch_controller/command", 1);
+    ros::Publisher left_shoulder_pitch_pub = nh.advertise<std_msgs::Float64>("/left_shoulder_pitch_controller/command", 1);
+    ros::Publisher left_shoulder_roll_pub = nh.advertise<std_msgs::Float64>("/left_shoulder_roll_controller/command", 1);
+    ros::Publisher left_waist_pitch_pub = nh.advertise<std_msgs::Float64>("/left_waist_pitch_controller/command", 1);
+    ros::Publisher left_waist_roll_pub = nh.advertise<std_msgs::Float64>("/left_waist_roll_controller/command", 1);
+    ros::Publisher left_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/left_waist_yaw_contyawer/command", 1);
+
+    ros::Publisher right_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/right_ankle_pitch_controller/command", 1);
+    ros::Publisher right_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/right_ankle_roll_controller/command", 1);
+    ros::Publisher right_elbow_pitch_pub = nh.advertise<std_msgs::Float64>("/right_elbow_pitch_controller/command", 1);
+    ros::Publisher right_knee_pitch_pub = nh.advertise<std_msgs::Float64>("/right_knee_pitch_controller/command", 1);
+    ros::Publisher right_shoulder_pitch_pub = nh.advertise<std_msgs::Float64>("/right_shoulder_pitch_controller/command", 1);
+    ros::Publisher right_shoulder_roll_pub = nh.advertise<std_msgs::Float64>("/right_shoulder_roll_controller/command", 1);
+    ros::Publisher right_waist_pitch_pub = nh.advertise<std_msgs::Float64>("/right_waist_pitch_controller/command", 1);
+    ros::Publisher right_waist_roll_pub = nh.advertise<std_msgs::Float64>("/right_waist_roll_controller/command", 1);
+    ros::Publisher right_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/right_waist_yaw_contyawer/command", 1);
+
+    std_msgs::Float64 rad;
     int i;
 
     var_init();                 // 変数の初期化
     serv_init();              // サーボモータの初期化
     calc_mv_init();             // 動きの計算の初期化
     //load_pc_motion("motions");
-    offset_load((char *)"/home/jsupratman13/catkin_ws/src/opr_ros/hajime_walk_ros/src/offset_angle.txt", servo_offset);
-    eeprom_load((char *)"/home/jsupratman13/catkin_ws/src/opr_ros/hajime_walk_ros/src/eeprom_list.txt");
+    offset_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/offset_angle.txt", servo_offset);
+    eeprom_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/eeprom_list.txt");
     flag_gyro.zero = ON;
 
     ros::Rate rate(100); //10 ms
@@ -279,10 +297,43 @@ int main( int argc, char *argv[] )
         convert_bin(&xv_comm_bin, &xv_comm);
         cntr();
         
-        for(i=0; i<SERV_NUM; i++ ){
-            joint_angles.data[i] = xv_ref.d[i];
-        }
-        pub.publish(joint_angles);
+        rad.data = -xv_ref.d[LEG_PITCH_L] * (M_PI/180);
+        left_ankle_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[FOOT_ROLL_L] * (M_PI/180);
+        left_ankle_roll_pub.publish(rad); 
+        rad.data = -xv_ref.d[ELBOW_PITCH_L] * (M_PI/180);
+        left_elbow_pitch_pub.publish(rad); 
+        rad.data = xv_ref.d[KNEE_L2] * (M_PI/180);
+        left_knee_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[ARM_PITCH_L] * (M_PI/180);
+        left_shoulder_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[ARM_ROLL_L] * (M_PI/180);
+        left_shoulder_roll_pub.publish(rad); 
+        rad.data = xv_ref.d[KNEE_L1] * (M_PI/180);
+        left_waist_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[LEG_ROLL_L] * (M_PI/180);
+        left_waist_roll_pub.publish(rad); 
+        rad.data = -xv_ref.d[LEG_YAW_L] * (M_PI/180);
+        left_waist_yaw_pub.publish(rad); 
+
+        rad.data = -xv_ref.d[LEG_PITCH_R] * (M_PI/180);
+        right_ankle_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[FOOT_ROLL_R] * (M_PI/180);
+        right_ankle_roll_pub.publish(rad); 
+        rad.data = -xv_ref.d[ELBOW_PITCH_R] * (M_PI/180);
+        right_elbow_pitch_pub.publish(rad); 
+        rad.data = xv_ref.d[KNEE_R2] * (M_PI/180);
+        right_knee_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[ARM_PITCH_R] * (M_PI/180);
+        right_shoulder_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[ARM_ROLL_R] * (M_PI/180);
+        right_shoulder_roll_pub.publish(rad); 
+        rad.data = xv_ref.d[KNEE_R1] * (M_PI/180);
+        right_waist_pitch_pub.publish(rad); 
+        rad.data = -xv_ref.d[LEG_ROLL_R] * (M_PI/180);
+        right_waist_roll_pub.publish(rad); 
+        rad.data = -xv_ref.d[LEG_YAW_R] * (M_PI/180);
+        right_waist_yaw_pub.publish(rad); 
 
         rate.sleep();
     }
