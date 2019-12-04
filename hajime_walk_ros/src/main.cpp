@@ -22,6 +22,8 @@
 
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/Imu.h>
+#include <tf/transform_datatypes.h>
 
 #include    <stdio.h>
 #include    <assert.h>
@@ -250,12 +252,42 @@ int eeprom_load(char *filename)
 
 //}
 
+void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
+{
+    tf::Quaternion q(msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w);
+    tf::Matrix3x3 m(q);
+    double roll, pitch, yaw;
+    m.getRPY(roll, pitch, yaw);
+
+    xv_acc.acc_data1 = msg->linear_acceleration.x; //-imu->getIMUData().accel.y();
+    xv_acc.acc_data2 = msg->linear_acceleration.y; //imu->getIMUData().accel.x();
+    xv_acc.acc_data3 = msg->linear_acceleration.z; //imu->getIMUData().accel.z();
+
+    const float radian_to_degree = 180.0 / M_PI;
+    //xv_gyro.gyro_data1 = -imu->getIMUData().gyro.y() * radian_to_degree;
+    //xv_gyro.gyro_data2 = imu->getIMUData().gyro.x() * radian_to_degree;
+    //xv_gyro.gyro_data3 = imu->getIMUData().gyro.z() * radian_to_degree;
+
+    xv_gyro.quaternion[0] = msg->orientation.x;//-imuData.fusionQPose.x();
+    xv_gyro.quaternion[1] = msg->orientation.y;//imuData.fusionQPose.z();
+    xv_gyro.quaternion[2] = msg->orientation.z;//imuData.fusionQPose.scalar();
+    xv_gyro.quaternion[3] = msg->orientation.w;//imuData.fusionQPose.y();
+
+    //double pitch_abs = 180.0 - abs(imuData.fusionPose.x()*RTMATH_RAD_TO_DEGREE);
+    //if(imuData.fusionPose.x() < 0)
+    //    pitch_abs = -pitch_abs;
+    xv_gyro.gyro_roll = xv_gyro.gyro_roll2 = roll * radian_to_degree;//imuData.fusionPose.y()*RTMATH_RAD_TO_DEGREE;
+    xv_gyro.gyro_pitch = xv_gyro.gyro_pitch2 = pitch * radian_to_degree;//pitch_abs;
+    xv_gyro.gyro_yaw = xv_gyro.gyro_yaw2 = yaw * radian_to_degree;//-(imuData.fusionPose.z()*RTMATH_RAD_TO_DEGREE);
+}
+
 int main( int argc, char *argv[] )
 {
     ros::init(argc, argv, "hajime_walk");
     ros::NodeHandle nh;
 
     //ros::Subscriber sub = nh.subscribe("/walk_command", 1000, strideCallback);
+    ros::Subscriber sub = nh.subscribe("/imu/data", 1000, imuCallback);
     ros::Publisher left_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/left_ankle_pitch_controller/command", 1);
     ros::Publisher left_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/left_ankle_roll_controller/command", 1);
     ros::Publisher left_elbow_pitch_pub = nh.advertise<std_msgs::Float64>("/left_elbow_pitch_controller/command", 1);
@@ -334,7 +366,8 @@ int main( int argc, char *argv[] )
         right_waist_roll_pub.publish(rad); 
         rad.data = -xv_ref.d[LEG_YAW_R] * (M_PI/180);
         right_waist_yaw_pub.publish(rad); 
-
+        
+        ros::spinOnce();
         rate.sleep();
     }
     
