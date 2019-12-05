@@ -2,9 +2,9 @@
 /*  HAJIME WALK CONTROL ROS                                 */
 /*  main program                                            */
 /*                                                          */
-/*  file name   :   main.c                                  */
+/*  file name   :   main.cpp                                */
 /*  compiler    :   gcc                                     */
-/*  author      :   Hajime Sakamoto                         */
+/*  authors     :   Hajime Sakamoto, Joshua Supratman       */
 /*  date        :   2007.7.15                               */
 /*  note        :   editor tab = 4                          */
 /*                                                          */
@@ -22,8 +22,11 @@
 
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/Int32.h>
+#include <std_msgs/Bool.h>
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_datatypes.h>
+#include "hajime_walk_ros/WalkCommand.h"
 
 #include    <stdio.h>
 #include    <assert.h>
@@ -33,11 +36,9 @@
 #include    <boost/thread.hpp>
 #include    <string>
 
-//#include "pc_motion.h"
+#include "pc_motion.h"
 //#include  "ADIS16375.h"
 //#include  "OrientationEstimator.h"
-//#include <RTIMULib.h>
-//#include <RTIMUSettings.h>
 
 extern "C" {
 #include    "var.h"
@@ -59,9 +60,11 @@ extern "C" {
 #include    "joy.h"
 
 #include    "acc.h"
-#include  "gyro.h"
+#include    "gyro.h"
 #include    "b3m.h"
 }
+
+#define PARAM_TABLE_OFFSET 26
 
 using namespace std;
 using namespace boost;
@@ -70,7 +73,19 @@ static mutex lock_obj;
 static string cmd;
 static bool response_ready = false;
 static string res;
+unsigned char walk_cmd  = 'C';
+unsigned char num_step  = '0';
+unsigned char period    = '0';
+unsigned char stride_x  = '0';
+unsigned char stride_y  = '0';
+unsigned char stride_th = '0';
 
+char ParamTable[53] =
+{
+	'z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a', // -26 - -1
+	'0',                                                                                                     // 0
+	'1','2','3','4','5','6','7','8','9','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'  // 1 - 26
+};
 
 extern "C"
 
@@ -247,10 +262,30 @@ int eeprom_load(char *filename)
     return 0;
 }
 
-//void strideCallback(const)
-//{
+void motionCallback(const std_msgs::Int32::ConstPtr &msg)
+{
+    //walk_cmd = 'M';
+}
 
-//}
+void cancelCallback(const std_msgs::Bool::ConstPtr &msg)
+{
+    walk_cmd = 'C';
+    num_step  = 0;
+    period    = 0;
+    stride_x  = 0;
+    stride_y  = 0;
+    stride_th = 0;
+}
+
+void walkCallback(const hajime_walk_ros::WalkCommand::ConstPtr &msg)
+{
+    walk_cmd = 'A';
+    num_step  = ParamTable[(int)(msg->num_step + PARAM_TABLE_OFFSET)];
+    period    = ParamTable[(int)(msg->period + PARAM_TABLE_OFFSET)];
+    stride_x  = ParamTable[(int)(msg->stride_x + PARAM_TABLE_OFFSET)];
+    stride_y  = ParamTable[(int)(msg->stride_y + PARAM_TABLE_OFFSET)];
+    stride_th = ParamTable[(int)(msg->stride_th + PARAM_TABLE_OFFSET)];
+}
 
 void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
@@ -286,8 +321,10 @@ int main( int argc, char *argv[] )
     ros::init(argc, argv, "hajime_walk");
     ros::NodeHandle nh;
 
-    //ros::Subscriber sub = nh.subscribe("/walk_command", 1000, strideCallback);
-    ros::Subscriber sub = nh.subscribe("/imu/data", 1000, imuCallback);
+    ros::Subscriber sub_walk = nh.subscribe("/hajime_walk/walk", 10, walkCallback);
+    ros::Subscriber sub_cancel = nh.subscribe("/hajime_walk/cancel", 10, cancelCallback);
+    ros::Subscriber sub_motion = nh.subscribe("/hajime_walk/motion", 10, motionCallback);
+    ros::Subscriber sub_imu = nh.subscribe("/imu/data", 1000, imuCallback);
     ros::Publisher left_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/left_ankle_pitch_controller/command", 1);
     ros::Publisher left_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/left_ankle_roll_controller/command", 1);
     ros::Publisher left_elbow_pitch_pub = nh.advertise<std_msgs::Float64>("/left_elbow_pitch_controller/command", 1);
@@ -325,7 +362,7 @@ int main( int argc, char *argv[] )
     
     count_time_l = 0;
     while(ros::ok()){
-        set_xv_comm(&xv_comm, 'A', '0', '0', '12', '0', '0');
+        set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
         convert_bin(&xv_comm_bin, &xv_comm);
         cntr();
         
@@ -335,13 +372,13 @@ int main( int argc, char *argv[] )
         left_ankle_roll_pub.publish(rad); 
         rad.data = -xv_ref.d[ELBOW_PITCH_L] * (M_PI/180);
         left_elbow_pitch_pub.publish(rad); 
-        rad.data = xv_ref.d[KNEE_L2] * (M_PI/180);
+        rad.data = -xv_ref.d[KNEE_L1] * (M_PI/180);
         left_knee_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[ARM_PITCH_L] * (M_PI/180);
         left_shoulder_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[ARM_ROLL_L] * (M_PI/180);
         left_shoulder_roll_pub.publish(rad); 
-        rad.data = xv_ref.d[KNEE_L1] * (M_PI/180);
+        rad.data = -xv_ref.d[KNEE_L2] * (M_PI/180);
         left_waist_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[LEG_ROLL_L] * (M_PI/180);
         left_waist_roll_pub.publish(rad); 
@@ -354,13 +391,13 @@ int main( int argc, char *argv[] )
         right_ankle_roll_pub.publish(rad); 
         rad.data = -xv_ref.d[ELBOW_PITCH_R] * (M_PI/180);
         right_elbow_pitch_pub.publish(rad); 
-        rad.data = xv_ref.d[KNEE_R2] * (M_PI/180);
+        rad.data = -xv_ref.d[KNEE_R1] * (M_PI/180);
         right_knee_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[ARM_PITCH_R] * (M_PI/180);
         right_shoulder_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[ARM_ROLL_R] * (M_PI/180);
         right_shoulder_roll_pub.publish(rad); 
-        rad.data = xv_ref.d[KNEE_R1] * (M_PI/180);
+        rad.data = -xv_ref.d[KNEE_R2] * (M_PI/180);
         right_waist_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[LEG_ROLL_R] * (M_PI/180);
         right_waist_roll_pub.publish(rad); 

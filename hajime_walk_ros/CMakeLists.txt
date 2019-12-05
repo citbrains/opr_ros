@@ -4,6 +4,18 @@ project(hajime_walk_ros)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  sensor_msgs
+  message_generation
+)
+
+add_message_files(
+  FILES
+  WalkCommand.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 set(CMAKE_CXX_STANDARD 11)
@@ -21,9 +33,7 @@ set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -ldl")
 
 FIND_PACKAGE(Boost COMPONENTS system thread filesystem)
 add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
-#add_subdirectory(RTIMULib)
 
-#set(ICE_DIR $ENV{ICE_HOME} CACHE PATH "ZeroC ICE installation dir(Default: $ICE_HOME)")
 
 add_definitions(-DGANKENKUN_MODE)
 
@@ -31,7 +41,7 @@ add_definitions(-D_AFXDLL -DSIM -D_CRT_SECURE_NO_WARNINGS)
 
 catkin_package(
     INCLUDE_DIRS include
-    CATKIN_DEPENDS roscpp
+    CATKIN_DEPENDS roscpp sensor_msgs std_msgs message_runtime
 )
 
 include_directories(
@@ -69,15 +79,16 @@ src/sq_walk.h             src/var.h                 src/pc_motion.h
 src/OrientationEstimator.h                          src/KSerialPort.h
 )
 
+SET(hr46_b3m_LIBRARIES
+	Ice
+	IceUtil
+)
 
 add_executable(hajime_walk
 	${HR46_B3M_SRCS}
 )
 
-SET(hr46_b3m_LIBRARIES
-	Ice
-	IceUtil
-)
+add_dependencies(hajime_walk ${PROJECT_NAME}_generate_messages_cpp)
 
 target_link_libraries(hajime_walk
 	${Boost_LIBRARIES}
@@ -85,15 +96,4 @@ target_link_libraries(hajime_walk
     ${catkin_LIBRARIES}
 )
 
-
-#SET(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/build/)
-
-#INSTALL(TARGETS hajime_walk
-#  RUNTIME DESTINATION pyfiles
-#  LIBRARY DESTINATION pyfiles
-#  ARCHIVE DESTINATION pyfiles
-#)
-
-#install(FILES servo_para.txt DESTINATION pyfiles)
-#install(FILES RTIMULib.ini DESTINATION pyfiles)
 

@@ -46,14 +46,5 @@ void	cntr( void )
 	calc_deg();				/*	calculate joint angle by inv. kinetics data	*/
 	serv();					/*	servo motor control					*/
 
-/*	if (flag_servo_off){
-		xv_mv.count				=	10001; // max. step number is 10000 (set by '0' as desired step number
-		sq_flag.straight		=	ON;
-		sq_flag.walk			=
-		sq_flag.motion			=	OFF;
-		flag_sq_motion_cancel	=	ON;
-		flag_face_control		=	OFF;
-	}*/
-
 	//servo_rs_fun();			/*	output to servo motors				*/
 }
