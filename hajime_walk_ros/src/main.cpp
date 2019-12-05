@@ -300,21 +300,21 @@ void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     xv_acc.acc_data3 = msg->linear_acceleration.z; //imu->getIMUData().accel.z();
 
     const float radian_to_degree = 180.0 / M_PI;
-    //xv_gyro.gyro_data1 = -imu->getIMUData().gyro.y() * radian_to_degree;
-    //xv_gyro.gyro_data2 = imu->getIMUData().gyro.x() * radian_to_degree;
-    //xv_gyro.gyro_data3 = imu->getIMUData().gyro.z() * radian_to_degree;
+    xv_gyro.gyro_data1 = msg->angular_velocity.x * radian_to_degree; //-imu->getIMUData().gyro.y() * radian_to_degree;
+    xv_gyro.gyro_data2 = msg->angular_velocity.y * radian_to_degree; //imu->getIMUData().gyro.x() * radian_to_degree;
+    xv_gyro.gyro_data3 = msg->angular_velocity.z * radian_to_degree; //imu->getIMUData().gyro.z() * radian_to_degree;
 
-    xv_gyro.quaternion[0] = msg->orientation.x;//-imuData.fusionQPose.x();
-    xv_gyro.quaternion[1] = msg->orientation.y;//imuData.fusionQPose.z();
-    xv_gyro.quaternion[2] = msg->orientation.z;//imuData.fusionQPose.scalar();
-    xv_gyro.quaternion[3] = msg->orientation.w;//imuData.fusionQPose.y();
+    xv_gyro.quaternion[0] = msg->orientation.x; //-imuData.fusionQPose.x();
+    xv_gyro.quaternion[1] = msg->orientation.y; //imuData.fusionQPose.z();
+    xv_gyro.quaternion[2] = msg->orientation.z; //imuData.fusionQPose.scalar();
+    xv_gyro.quaternion[3] = msg->orientation.w; //imuData.fusionQPose.y();
 
     //double pitch_abs = 180.0 - abs(imuData.fusionPose.x()*RTMATH_RAD_TO_DEGREE);
     //if(imuData.fusionPose.x() < 0)
     //    pitch_abs = -pitch_abs;
-    xv_gyro.gyro_roll = xv_gyro.gyro_roll2 = roll * radian_to_degree;//imuData.fusionPose.y()*RTMATH_RAD_TO_DEGREE;
-    xv_gyro.gyro_pitch = xv_gyro.gyro_pitch2 = pitch * radian_to_degree;//pitch_abs;
-    xv_gyro.gyro_yaw = xv_gyro.gyro_yaw2 = yaw * radian_to_degree;//-(imuData.fusionPose.z()*RTMATH_RAD_TO_DEGREE);
+    xv_gyro.gyro_roll = xv_gyro.gyro_roll2 = roll * radian_to_degree;    //imuData.fusionPose.y()*RTMATH_RAD_TO_DEGREE;
+    xv_gyro.gyro_pitch = xv_gyro.gyro_pitch2 = pitch * radian_to_degree; //pitch_abs;
+    xv_gyro.gyro_yaw = xv_gyro.gyro_yaw2 = yaw * radian_to_degree;       //-(imuData.fusionPose.z()*RTMATH_RAD_TO_DEGREE);
 }
 
 int main( int argc, char *argv[] )
