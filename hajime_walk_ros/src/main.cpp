@@ -21,6 +21,7 @@
 /*--------------------------------------*/
 
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/Bool.h>
@@ -352,8 +353,12 @@ int main( int argc, char *argv[] )
     serv_init();              // サーボモータの初期化
     calc_mv_init();             // 動きの計算の初期化
     //load_pc_motion("motions");
-    offset_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/offset_angle.txt", servo_offset);
-    eeprom_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/eeprom_list.txt");
+    //offset_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/offset_angle.txt", servo_offset);
+
+    std::string eeprom_path = ros::package::getPath("hajime_walk_ros") + "/config/eeprom_list.txt";
+    nh.getParam("eeprom_path", eeprom_path);
+    eeprom_load((char *) eeprom_path.c_str());
+
     flag_gyro.zero = ON;
 
     ros::Rate rate(100); //10 ms
