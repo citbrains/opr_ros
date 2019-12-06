@@ -778,7 +778,7 @@ void	joy( void )
 			break;
 
 		case	'C':		/*	cancel	*/
-			printf("CANCEL !!\n");
+			//printf("CANCEL !!\n");
 			if( _xv_comm_bin.para1 == 0 )
 			{
 				if(mode_motion != MOTION_MOTION) // only stop if current motion is not special action
