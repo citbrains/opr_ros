@@ -28,6 +28,7 @@
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_datatypes.h>
 #include "hajime_walk_ros/WalkCommand.h"
+#include "hajime_walk_ros/MotionCommand.h"
 
 #include    <stdio.h>
 #include    <assert.h>
@@ -337,6 +338,13 @@ void load_eeprom()
     } else{
         ROS_ERROR("failed to get flag_gyro.fall_cntl");
     }
+    float zero;
+    if(private_nh_flag_gyro.getParam("zero", zero)){
+        flag_gyro.zero = (short)zero;
+        ROS_INFO("flag_gyro.zero: %d", flag_gyro.zero);
+    } else{
+        ROS_ERROR("failed to get flag_gyro.zero");
+    }
 
     ros::NodeHandle private_nh_xp_mv_straight(std::string("~")+"xp_mv_straight");
     if(private_nh_xp_mv_straight.getParam("time", xp_mv_straight.time)){
@@ -612,23 +620,26 @@ void load_eeprom()
 
 }
 
-void motionCallback(const std_msgs::Int32::ConstPtr &msg)
+void motionCallback(const hajime_walk_ros::MotionCommand::ConstPtr &msg)
 {
     motion_flag = true;
-    std::string s = std::to_string(msg->data);
-    if(msg->data < 100){
+    std::string s = std::to_string(msg->no_motion);
+    if(msg->no_motion < 100){
+        s = "0" + s;
+    }
+    if(msg->no_motion < 10){
         s = "0" + s;
     }
     char const *pchar = s.c_str();
 
     walk_cmd = 'M';
-    num_step  = pchar[0];
-    period    = 1; //number of motion repeat, 0 is infinite
-    stride_x  = pchar[2];
-    stride_y  = 0;
-    stride_th = pchar[1];
+    char para1  = pchar[0];
+    char para2  = pchar[1];
+    char para3  = pchar[2];
+    char para4  = ParamTable[(int)(msg->num_repeat + PARAM_TABLE_OFFSET)];
+    char para5  = 0;
 
-    set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
+    set_xv_comm(&xv_comm, walk_cmd, para1, para2, para3, para4, para5);
     convert_bin(&xv_comm_bin, &xv_comm);
 }
 
@@ -724,8 +735,6 @@ int main( int argc, char *argv[] )
     load_pc_motion(motion_path_.c_str());
 
     load_eeprom();
-
-    flag_gyro.zero = ON;
 
     ros::Rate rate(100); //10 ms
     //ros::AsyncSpinner spinner(1);

@@ -48,6 +48,7 @@ xp_gyro:
 
 flag_gyro:
    fall_cntl:                      0.0                      
+   zero:                           1.0                      
 
 xp_mv_straight:
    time:                           1.0                      
