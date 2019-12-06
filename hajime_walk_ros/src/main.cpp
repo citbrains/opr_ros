@@ -80,6 +80,7 @@ unsigned char period    = '0';
 unsigned char stride_x  = '0';
 unsigned char stride_y  = '0';
 unsigned char stride_th = '0';
+bool motion_flag = false;
 
 char ParamTable[53] =
 {
@@ -613,6 +614,7 @@ void load_eeprom()
 
 void motionCallback(const std_msgs::Int32::ConstPtr &msg)
 {
+    motion_flag = true;
     std::string s = std::to_string(msg->data);
     if(msg->data < 100){
         s = "0" + s;
@@ -621,14 +623,18 @@ void motionCallback(const std_msgs::Int32::ConstPtr &msg)
 
     walk_cmd = 'M';
     num_step  = pchar[0];
-    period    = pchar[1];
+    period    = 1; //number of motion repeat, 0 is infinite
     stride_x  = pchar[2];
-    stride_y  = 0; //number of repeat
-    stride_th = 0;
+    stride_y  = 0;
+    stride_th = pchar[1];
+
+    set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
+    convert_bin(&xv_comm_bin, &xv_comm);
 }
 
 void cancelCallback(const std_msgs::Bool::ConstPtr &msg)
 {
+    motion_flag = false;
     walk_cmd = 'C';
     num_step  = 0;
     period    = 0;
@@ -639,6 +645,7 @@ void cancelCallback(const std_msgs::Bool::ConstPtr &msg)
 
 void walkCallback(const hajime_walk_ros::WalkCommand::ConstPtr &msg)
 {
+    motion_flag = false;
     walk_cmd = 'A';
     num_step  = ParamTable[(int)(msg->num_step + PARAM_TABLE_OFFSET)];
     period    = ParamTable[(int)(msg->period + PARAM_TABLE_OFFSET)];
@@ -725,8 +732,10 @@ int main( int argc, char *argv[] )
     //spinner.start();
     
     while(ros::ok()){
-        set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
-        convert_bin(&xv_comm_bin, &xv_comm);
+        if(!motion_flag){
+            set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
+            convert_bin(&xv_comm_bin, &xv_comm);
+        }
         cntr();
         
         rad.data = -xv_ref.d[LEG_PITCH_L] * (M_PI/180);
