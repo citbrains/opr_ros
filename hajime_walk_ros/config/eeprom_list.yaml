@@ -1,0 +1,130 @@
+odometry_correct_para_x:           0.9          
+odometry_correct_para_y:           0.8          
+touchdown_gain:                    0.0          
+
+xp_acc:
+   acc_k1:                         3.1      
+   acc_k2:                         -3.1 
+   acc_k3:                         3.1      
+   ad_volt_offset1:                -1.65    
+   ad_volt_offset2:                -1.65    
+   ad_volt_offset3:                -1.65    
+   t1:                             100.0    
+   t2:                             300.0    
+   fall_fwd:                       70.0 
+   fall_bwd:                       -70.0    
+   fall_right:                     70.0 
+   fall_left:                      -70.0    
+   fall_check_time:                100.0      #(1*RTC_TICK)
+   fall_pitch:                     70.0 
+   fall_roll:                      70.0 
+   fall_pitch_oblique:             70.0 
+   fall_roll_oblique:              70.0 
+
+xp_gyro:
+   kp1_foot:                       0.05 
+   kp2_foot:                       0.0      
+   kp1_hip:                        0.0      
+   kp2_hip:                        0.0      
+   kp1_arm:                        0.0      
+   kp2_arm:                        -0.05    
+   kp2_waist:                      0.05 
+   kp3_waist:                      0.0      
+   gyro_k1:                        1000.0   
+   gyro_k2:                        1000.0   
+   gyro_k3:                        100.0    
+   ad_volt_offset1:                -1.329728
+   ad_volt_offset2:                -1.320974
+   ad_volt_offset3:                -2.5                 
+   t1:                             5.0                      
+   t2:                             15.0                 
+   gyro_data3_flt2_t1:             1000.0                   
+   yaw_cntl_gain:                  1.0                      
+   yaw_cntl_dead:                  2.0                      
+   yaw_cntl_theta:                 5.0                      
+   gyro_omega:                     0.3                      
+   fall_roll_deg1:                 50.0                 
+   fall_pitch_deg1:                55.0                 
+
+flag_gyro:
+   fall_cntl:                      0.0                      
+
+xp_mv_straight:
+   time:                           1.0                      
+   z3:                             302.0                    
+   arm_sh_pitch:                   0.0                      
+   arm_sh_roll:                    0.0                      
+   arm_el_yaw:                     0.0                      
+   arm_el_pitch:                   0.0                      
+
+xp_mv_ready:
+   time:                           1.5                      
+   z3:                             290.0                    
+   arm_sh_pitch:                   -20.0                    
+   arm_sh_roll:                    0.0      
+   arm_el_yaw:                     0.0                      
+   arm_el_pitch:                   40.0                 
+   pitch:                          0.0                      
+
+xp_mv_walk:
+   num:                            8.0                      
+   h_cog:                          300.0      #(*)
+   time:                           0.32       #(*)
+   next_walk:                      1.0        #不使用
+   x_fwd_swg:                      85.0                 
+   x_fwd_spt:                      -115.0                   
+   x_bwd_swg:                      -55.0                    
+   x_bwd_spt:                      65.0     
+   y_swg:                          60.0       #(*)
+   y_spt:                          -100.0       
+   theta:                          18.0     
+   z:                              60.0       #(*)-低速なら30でも可
+   y_balance:                      90.0       #(*)_股間の距離/2(本当は44.0)
+   hip_roll:                       0.0        #不使用
+   x_fwd_pitch:                    1.0          
+   x_bwd_pitch:                    -2.0     
+   arm_sh_pitch:                   0.0       
+   start_time_k1:                  0.8        #(*)
+   start_zmp_k1:                   0.8        #(*)
+   start_time_k2:                  0.8          
+   foot_cntl_p:                    0.0          
+   foot_cntl_r:                    3.0          
+   sidestep_time_k:                0.5          
+   sidestep_roll:                  1.0          
+   g_comp:                         1.0        #不使用
+   y_wide:                         20.0     
+   time_dutyfactor:                0.92     
+   x_fwd_acc_pitch:                0.0          
+   x_bwd_acc_pitch:                0.0  
+   accurate_x_percent_dlim:        1.0         
+   accurate_y_percent_dlim:        0.70        
+   accurate_th_percent_dlim:       0.6667      
+   arm_el_pitch:                   0            
+
+xp_dlim_wait_x:
+   dlim:                           0.8          
+   wait_time:                      0.05     
+
+xp_dlim_wait_y:
+   dlim:                           0.5          
+   wait_time:                      0.15     
+
+xp_dlim_wait_theta:
+   dlim:                           1.0          
+   wait_time:                      0.05     
+
+xp_dlim_wait_pitch:
+   dlim:                           10.0     
+
+flag_eeprom_para_ok:               0.0      
+sw_soft1:                          0.0      
+sw_soft2:                          0.0      
+sw_soft3:                          0.0      
+sw_soft4:                          0.0      
+USER_PARAMETER_22:                 0.0      
+USER_PARAMETER_23:                 0.0      
+USER_PARAMETER_24:                 0.0      
+USER_PARAMETER_49:                 0.0                      
+USER_PARAMETER_63:                 0.0                      
+USER_PARAMETER_64:                 0.0                      
+

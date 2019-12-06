@@ -317,6 +317,508 @@ void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
     xv_gyro.gyro_yaw = xv_gyro.gyro_yaw2 = yaw * radian_to_degree;       //-(imuData.fusionPose.z()*RTMATH_RAD_TO_DEGREE);
 }
 
+void load_eeprom()
+{
+    ros::NodeHandle private_nh("~");
+    if(private_nh.getParam("odometry_correct_para_x", odometry_correct_para_x)){
+        ROS_INFO("odometry_correct_para_x: %f", odometry_correct_para_x);
+    } else{
+        ROS_ERROR("failed to get odometry_correct_para_x");
+    }
+    if(private_nh.getParam("odometry_correct_para_y", odometry_correct_para_y)){
+        ROS_INFO("odometry_correct_para_y: %f", odometry_correct_para_y);
+    } else{
+        ROS_ERROR("failed to get odometry_correct_para_y");
+    }
+
+    ros::NodeHandle private_nh_xp_acc(std::string("~")+"xp_acc");
+    if(private_nh_xp_acc.getParam("acc_k1", xp_acc.acc_k1)){
+        ROS_INFO("xp_acc.acc_k1: %f", xp_acc.acc_k1);
+    } else{
+        ROS_ERROR("failed to get xp_acc.acc_k1");
+    }
+    if(private_nh_xp_acc.getParam("acc_k2", xp_acc.acc_k2)){
+        ROS_INFO("xp_acc.acc_k2: %f", xp_acc.acc_k2);
+    } else{
+        ROS_ERROR("failed to get xp_acc.acc_k2");
+    }
+    if(private_nh_xp_acc.getParam("acc_k3", xp_acc.acc_k3)){
+        ROS_INFO("xp_acc.acc_k3: %f", xp_acc.acc_k3);
+    } else{
+        ROS_ERROR("failed to get xp_acc.acc_k3");
+    }
+    if(private_nh_xp_acc.getParam("ad_volt_offset1", xp_acc.ad_volt_offset1)){
+        ROS_INFO("xp_acc.ad_volt_offset1: %f", xp_acc.ad_volt_offset1);
+    } else{
+        ROS_ERROR("failed to get xp_acc.ad_volt_offset1");
+    }
+    if(private_nh_xp_acc.getParam("ad_volt_offset2", xp_acc.ad_volt_offset2)){
+        ROS_INFO("xp_acc.ad_volt_offset2: %f", xp_acc.ad_volt_offset2);
+    } else{
+        ROS_ERROR("failed to get xp_acc.ad_volt_offset2");
+    }
+    if(private_nh_xp_acc.getParam("ad_volt_offset3", xp_acc.ad_volt_offset3)){
+        ROS_INFO("xp_acc.ad_volt_offset3: %f", xp_acc.ad_volt_offset3);
+    } else{
+        ROS_ERROR("failed to get xp_acc.ad_volt_offset3");
+    }
+    if(private_nh_xp_acc.getParam("t1", xp_acc.t1)){
+        ROS_INFO("xp_acc.t1: %f", xp_acc.t1);
+    } else{
+        ROS_ERROR("failed to get xp_acc.t1");
+    }
+    if(private_nh_xp_acc.getParam("t2", xp_acc.t2)){
+        ROS_INFO("xp_acc.t2: %f", xp_acc.t2);
+    } else{
+        ROS_ERROR("failed to get xp_acc.t2");
+    }
+    if(private_nh_xp_acc.getParam("fall_fwd", xp_acc.fall_fwd)){
+        ROS_INFO("xp_acc.fall_fwd: %f", xp_acc.fall_fwd);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_fwd");
+    }
+    if(private_nh_xp_acc.getParam("fall_bwd", xp_acc.fall_bwd)){
+        ROS_INFO("xp_acc.fall_bwd: %f", xp_acc.fall_bwd);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_bwd");
+    }
+    if(private_nh_xp_acc.getParam("fall_right", xp_acc.fall_right)){
+        ROS_INFO("xp_acc.fall_right: %f", xp_acc.fall_right);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_right");
+    }
+    if(private_nh_xp_acc.getParam("fall_left", xp_acc.fall_left)){
+        ROS_INFO("xp_acc.fall_left: %f", xp_acc.fall_left);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_left");
+    }
+    if(private_nh_xp_acc.getParam("fall_check_time", xp_acc.fall_check_time)){
+        ROS_INFO("xp_acc.fall_check_time: %f", xp_acc.fall_check_time);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_check_time");
+    }
+    if(private_nh_xp_acc.getParam("fall_pitch", xp_acc.fall_pitch)){
+        ROS_INFO("xp_acc.fall_pitch: %f", xp_acc.fall_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_pitch");
+    }
+    if(private_nh_xp_acc.getParam("fall_roll", xp_acc.fall_roll)){
+        ROS_INFO("xp_acc.fall_roll: %f", xp_acc.fall_roll);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_roll");
+    }
+    if(private_nh_xp_acc.getParam("fall_pitch_oblique", xp_acc.fall_pitch_oblique)){
+        ROS_INFO("xp_acc.fall_pitch_oblique: %f", xp_acc.fall_pitch_oblique);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_pitch_oblique");
+    }
+    if(private_nh_xp_acc.getParam("fall_roll_oblique", xp_acc.fall_roll_oblique)){
+        ROS_INFO("xp_acc.fall_roll_oblique: %f", xp_acc.fall_roll_oblique);
+    } else{
+        ROS_ERROR("failed to get xp_acc.fall_roll_oblique");
+    }
+
+    ros::NodeHandle private_nh_xp_gyro(std::string("~")+"xp_gyro");
+    if(private_nh_xp_gyro.getParam("kp1_foot", xp_gyro.kp1_foot)){
+        ROS_INFO("xp_gyro.kp1_foot: %f", xp_gyro.kp1_foot);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp1_foot");
+    }
+    if(private_nh_xp_gyro.getParam("kp2_foot", xp_gyro.kp2_foot)){
+        ROS_INFO("xp_gyro.kp2_foot: %f", xp_gyro.kp2_foot);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp2_foot");
+    }
+    if(private_nh_xp_gyro.getParam("kp1_hip", xp_gyro.kp1_hip)){
+        ROS_INFO("xp_gyro.kp1_hip: %f", xp_gyro.kp1_hip);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp1_hip");
+    }
+    if(private_nh_xp_gyro.getParam("kp2_hip", xp_gyro.kp2_hip)){
+        ROS_INFO("xp_gyro.kp2_hip: %f", xp_gyro.kp2_hip);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp2_hip");
+    }
+    if(private_nh_xp_gyro.getParam("kp1_arm", xp_gyro.kp1_arm)){
+        ROS_INFO("xp_gyro.kp1_arm: %f", xp_gyro.kp1_arm);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp1_arm");
+    }
+    if(private_nh_xp_gyro.getParam("kp2_arm", xp_gyro.kp2_arm)){
+        ROS_INFO("xp_gyro.kp2_arm: %f", xp_gyro.kp2_arm);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp2_arm");
+    }
+    if(private_nh_xp_gyro.getParam("kp2_waist", xp_gyro.kp2_waist)){
+        ROS_INFO("xp_gyro.kp2_waist: %f", xp_gyro.kp2_waist);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp2_waist");
+    }
+    if(private_nh_xp_gyro.getParam("kp3_waist", xp_gyro.kp3_waist)){
+        ROS_INFO("xp_gyro.kp3_waist: %f", xp_gyro.kp3_waist);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.kp3_waist");
+    }
+    if(private_nh_xp_gyro.getParam("gyro_k1", xp_gyro.gyro_k1)){
+        ROS_INFO("xp_gyro.gyro_k1: %f", xp_gyro.gyro_k1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.gyro_k1");
+    }
+    if(private_nh_xp_gyro.getParam("gyro_k2", xp_gyro.gyro_k2)){
+        ROS_INFO("xp_gyro.gyro_k2: %f", xp_gyro.gyro_k2);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.gyro_k2");
+    }
+    if(private_nh_xp_gyro.getParam("gyro_k3", xp_gyro.gyro_k3)){
+        ROS_INFO("xp_gyro.gyro_k3: %f", xp_gyro.gyro_k3);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.gyro_k3");
+    }
+    if(private_nh_xp_gyro.getParam("ad_volt_offset1", xp_gyro.ad_volt_offset1)){
+        ROS_INFO("xp_gyro.ad_volt_offset1: %f", xp_gyro.ad_volt_offset1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.ad_volt_offset1");
+    }
+    if(private_nh_xp_gyro.getParam("ad_volt_offset2", xp_gyro.ad_volt_offset2)){
+        ROS_INFO("xp_gyro.ad_volt_offset2: %f", xp_gyro.ad_volt_offset2);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.ad_volt_offset2");
+    }
+    if(private_nh_xp_gyro.getParam("ad_volt_offset3", xp_gyro.ad_volt_offset3)){
+        ROS_INFO("xp_gyro.ad_volt_offset3: %f", xp_gyro.ad_volt_offset3);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.ad_volt_offset3");
+    }
+    if(private_nh_xp_gyro.getParam("t1", xp_gyro.t1)){
+        ROS_INFO("xp_gyro.t1: %f", xp_gyro.t1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.t1");
+    }
+    if(private_nh_xp_gyro.getParam("t2", xp_gyro.t2)){
+        ROS_INFO("xp_gyro.t2: %f", xp_gyro.t2);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.t2");
+    }
+    if(private_nh_xp_gyro.getParam("gyro_data3_flt2_t1", xp_gyro.gyro_data3_flt2_t1)){
+        ROS_INFO("xp_gyro.gyro_data3_flt2_t1: %f", xp_gyro.gyro_data3_flt2_t1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.gyro_data3_flt2_t1");
+    }
+    if(private_nh_xp_gyro.getParam("yaw_cntl_gain", xp_gyro.yaw_cntl_gain)){
+        ROS_INFO("xp_gyro.yaw_cntl_gain: %f", xp_gyro.yaw_cntl_gain);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.yaw_cntl_gain");
+    }
+    if(private_nh_xp_gyro.getParam("yaw_cntl_dead", xp_gyro.yaw_cntl_dead)){
+        ROS_INFO("xp_gyro.yaw_cntl_dead: %f", xp_gyro.yaw_cntl_dead);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.yaw_cntl_dead");
+    }
+    if(private_nh_xp_gyro.getParam("yaw_cntl_theta", xp_gyro.yaw_cntl_theta)){
+        ROS_INFO("xp_gyro.yaw_cntl_theta: %f", xp_gyro.yaw_cntl_theta);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.yaw_cntl_theta");
+    }
+    if(private_nh_xp_gyro.getParam("gyro_omega", xp_gyro.gyro_omega)){
+        ROS_INFO("xp_gyro.gyro_omega: %f", xp_gyro.gyro_omega);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.gyro_omega");
+    }
+    if(private_nh_xp_gyro.getParam("fall_roll_deg1", xp_gyro.fall_roll_deg1)){
+        ROS_INFO("xp_gyro.fall_roll_deg1: %f", xp_gyro.fall_roll_deg1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.fall_roll_deg1");
+    }
+    if(private_nh_xp_gyro.getParam("fall_pitch_deg1", xp_gyro.fall_pitch_deg1)){
+        ROS_INFO("xp_gyro.fall_pitch_deg1: %f", xp_gyro.fall_pitch_deg1);
+    } else{
+        ROS_ERROR("failed to get xp_gyro.fall_pitch_deg1");
+    }
+
+    ros::NodeHandle private_nh_flag_gyro(std::string("~")+"flag_gyro");
+    float fall_cntl;
+    if(private_nh_flag_gyro.getParam("fall_cntl", fall_cntl)){
+        flag_gyro.fall_cntl = (short)fall_cntl;
+        ROS_INFO("flag_gyro.fall_cntl: %d", flag_gyro.fall_cntl);
+    } else{
+        ROS_ERROR("failed to get flag_gyro.fall_cntl");
+    }
+
+    ros::NodeHandle private_nh_xp_mv_straight(std::string("~")+"xp_mv_straight");
+    if(private_nh_xp_mv_straight.getParam("time", xp_mv_straight.time)){
+        ROS_INFO("xp_mv_straight.time: %f", xp_mv_straight.time);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.time");
+    }
+    if(private_nh_xp_mv_straight.getParam("z3", xp_mv_straight.z3)){
+        ROS_INFO("xp_mv_straight.z3: %f", xp_mv_straight.z3);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.z3");
+    }
+    if(private_nh_xp_mv_straight.getParam("arm_sh_pitch", xp_mv_straight.arm_sh_pitch)){
+        ROS_INFO("xp_mv_straight.arm_sh_pitch: %f", xp_mv_straight.arm_sh_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.arm_sh_pitch");
+    }
+    if(private_nh_xp_mv_straight.getParam("arm_sh_roll", xp_mv_straight.arm_sh_roll)){
+        ROS_INFO("xp_mv_straight.arm_sh_roll: %f", xp_mv_straight.arm_sh_roll);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.arm_sh_roll");
+    }
+    if(private_nh_xp_mv_straight.getParam("arm_el_yaw", xp_mv_straight.arm_el_yaw)){
+        ROS_INFO("xp_mv_straight.arm_el_yaw: %f", xp_mv_straight.arm_el_yaw);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.arm_el_yaw");
+    }
+    if(private_nh_xp_mv_straight.getParam("arm_el_pitch", xp_mv_straight.arm_el_pitch)){
+        ROS_INFO("xp_mv_straight.arm_el_pitch: %f", xp_mv_straight.arm_el_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_straight.arm_el_pitch");
+    }
+            
+    ros::NodeHandle private_nh_xp_mv_ready(std::string("~")+"xp_mv_ready");
+    if(private_nh_xp_mv_ready.getParam("time", xp_mv_ready.time)){
+        ROS_INFO("xp_mv_ready.time: %f", xp_mv_ready.time);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.time");
+    }
+    if(private_nh_xp_mv_ready.getParam("z3", xp_mv_ready.z3)){
+        ROS_INFO("xp_mv_ready.z3: %f", xp_mv_ready.z3);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.z3");
+    }
+    if(private_nh_xp_mv_ready.getParam("arm_sh_pitch", xp_mv_ready.arm_sh_pitch)){
+        ROS_INFO("xp_mv_ready.arm_sh_pitch: %f", xp_mv_ready.arm_sh_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.arm_sh_pitch");
+    }
+    if(private_nh_xp_mv_ready.getParam("arm_sh_roll", xp_mv_ready.arm_sh_roll)){
+        ROS_INFO("xp_mv_ready.arm_sh_roll: %f", xp_mv_ready.arm_sh_roll);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.arm_sh_roll");
+    }
+    if(private_nh_xp_mv_ready.getParam("arm_el_yaw", xp_mv_ready.arm_el_yaw)){
+        ROS_INFO("xp_mv_ready.arm_el_yaw: %f", xp_mv_ready.arm_el_yaw);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.arm_el_yaw");
+    }
+    if(private_nh_xp_mv_ready.getParam("arm_el_pitch", xp_mv_ready.arm_el_pitch)){
+        ROS_INFO("xp_mv_ready.arm_el_pitch: %f", xp_mv_ready.arm_el_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.arm_el_pitch");
+    }
+    if(private_nh_xp_mv_ready.getParam("pitch", xp_mv_ready.pitch)){
+        ROS_INFO("xp_mv_ready.pitch: %f", xp_mv_ready.pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_ready.pitch");
+    }
+
+    ros::NodeHandle private_nh_xp_mv_walk(std::string("~")+"xp_mv_walk");
+    float num;
+    if(private_nh_xp_mv_walk.getParam("num", num)){
+        xp_mv_walk.num = (long)num;
+        ROS_INFO("xp_mv_walk.num: %ld", xp_mv_walk.num);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.num");
+    }
+    if(private_nh_xp_mv_walk.getParam("h_cog", xp_mv_walk.h_cog)){
+        ROS_INFO("xp_mv_walk.h_cog: %f", xp_mv_walk.h_cog);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.h_cog");
+    }
+    if(private_nh_xp_mv_walk.getParam("time", xp_mv_walk.time)){
+        ROS_INFO("xp_mv_walk.time: %f", xp_mv_walk.time);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.time");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_fwd_swg", xp_mv_walk.x_fwd_swg)){
+        ROS_INFO("xp_mv_walk.x_fwd_swg: %f", xp_mv_walk.x_fwd_swg);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_fwd_swg");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_fwd_spt", xp_mv_walk.x_fwd_spt)){
+        ROS_INFO("xp_mv_walk.x_fwd_spt: %f", xp_mv_walk.x_fwd_spt);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_fwd_spt");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_bwd_swg", xp_mv_walk.x_bwd_swg)){
+        ROS_INFO("xp_mv_walk.x_bwd_swg: %f", xp_mv_walk.x_bwd_swg);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_bwd_swg");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_bwd_spt", xp_mv_walk.x_bwd_spt)){
+        ROS_INFO("xp_mv_walk.x_bwd_spt: %f", xp_mv_walk.x_bwd_spt);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_bwd_spt");
+    }
+    if(private_nh_xp_mv_walk.getParam("y_swg", xp_mv_walk.y_swg)){
+        ROS_INFO("xp_mv_walk.y_swg: %f", xp_mv_walk.y_swg);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.y_swg");
+    }
+    if(private_nh_xp_mv_walk.getParam("y_spt", xp_mv_walk.y_spt)){
+        ROS_INFO("xp_mv_walk.y_spt: %f", xp_mv_walk.y_spt);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.y_spt");
+    }
+    if(private_nh_xp_mv_walk.getParam("theta", xp_mv_walk.theta)){
+        ROS_INFO("xp_mv_walk.theta: %f", xp_mv_walk.theta);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.theta");
+    }
+    if(private_nh_xp_mv_walk.getParam("z", xp_mv_walk.z)){
+        ROS_INFO("xp_mv_walk.z: %f", xp_mv_walk.z);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.z");
+    }
+    if(private_nh_xp_mv_walk.getParam("y_balance", xp_mv_walk.y_balance)){
+        ROS_INFO("xp_mv_walk.y_balance: %f", xp_mv_walk.y_balance);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.y_balance");
+    }
+    if(private_nh_xp_mv_walk.getParam("hip_roll", xp_mv_walk.hip_roll)){
+        ROS_INFO("xp_mv_walk.hip_roll: %f", xp_mv_walk.hip_roll);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.hip_roll");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_fwd_pitch", xp_mv_walk.x_fwd_pitch)){
+        ROS_INFO("xp_mv_walk.x_fwd_pitch: %f", xp_mv_walk.x_fwd_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_fwd_pitch");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_bwd_pitch", xp_mv_walk.x_bwd_pitch)){
+        ROS_INFO("xp_mv_walk.x_bwd_pitch: %f", xp_mv_walk.x_bwd_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_bwd_pitch");
+    }
+    if(private_nh_xp_mv_walk.getParam("arm_sh_pitch", xp_mv_walk.arm_sh_pitch)){
+        ROS_INFO("xp_mv_walk.arm_sh_pitch: %f", xp_mv_walk.arm_sh_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.arm_sh_pitch");
+    }
+    if(private_nh_xp_mv_walk.getParam("start_time_k1", xp_mv_walk.start_time_k1)){
+        ROS_INFO("xp_mv_walk.start_time_k1: %f", xp_mv_walk.start_time_k1);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.start_time_k1");
+    }
+    if(private_nh_xp_mv_walk.getParam("start_zmp_k1", xp_mv_walk.start_zmp_k1)){
+        ROS_INFO("xp_mv_walk.start_zmp_k1: %f", xp_mv_walk.start_zmp_k1);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.start_zmp_k1");
+    }
+    //if(private_nh_xp_mv_walk.getParam("start_time_k2", xp_mv_walk.start_time_k2)){
+    //    ROS_INFO("xp_mv_walk.start_time_k2: %f", xp_mv_walk.start_time_k2);
+    //} else{
+    //    ROS_ERROR("failed to get xp_mv_walk.start_time_k2");
+    //}
+    if(private_nh_xp_mv_walk.getParam("foot_cntl_p", xp_mv_walk.foot_cntl_p)){
+        ROS_INFO("xp_mv_walk.foot_cntl_p: %f", xp_mv_walk.foot_cntl_p);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.foot_cntl_p");
+    }
+    if(private_nh_xp_mv_walk.getParam("foot_cntl_r", xp_mv_walk.foot_cntl_r)){
+        ROS_INFO("xp_mv_walk.foot_cntl_r: %f", xp_mv_walk.foot_cntl_r);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.foot_cntl_r");
+    }
+    if(private_nh_xp_mv_walk.getParam("sidestep_time_k", xp_mv_walk.sidestep_time_k)){
+        ROS_INFO("xp_mv_walk.sidestep_time_k: %f", xp_mv_walk.sidestep_time_k);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.sidestep_time_k");
+    }
+    if(private_nh_xp_mv_walk.getParam("sidestep_roll", xp_mv_walk.sidestep_roll)){
+        ROS_INFO("xp_mv_walk.sidestep_roll: %f", xp_mv_walk.sidestep_roll);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.sidestep_roll");
+    }
+    if(private_nh_xp_mv_walk.getParam("y_wide", xp_mv_walk.y_wide)){
+        ROS_INFO("xp_mv_walk.y_wide: %f", xp_mv_walk.y_wide);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.y_wide");
+    }
+    if(private_nh_xp_mv_walk.getParam("time_dutyfactor", xp_mv_walk.time_dutyfactor)){
+        ROS_INFO("xp_mv_walk.time_dutyfactor: %f", xp_mv_walk.time_dutyfactor);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.time_dutyfactor");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_fwd_acc_pitch", xp_mv_walk.x_fwd_acc_pitch)){
+        ROS_INFO("xp_mv_walk.x_fwd_acc_pitch: %f", xp_mv_walk.x_fwd_acc_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_fwd_acc_pitch");
+    }
+    if(private_nh_xp_mv_walk.getParam("x_bwd_acc_pitch", xp_mv_walk.x_bwd_acc_pitch)){
+        ROS_INFO("xp_mv_walk.x_bwd_acc_pitch: %f", xp_mv_walk.x_bwd_acc_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.x_bwd_acc_pitch");
+    }
+    if(private_nh_xp_mv_walk.getParam("accurate_x_percent_dlim", xp_mv_walk.accurate_x_percent_dlim)){
+        ROS_INFO("xp_mv_walk.accurate_x_percent_dlim: %f", xp_mv_walk.accurate_x_percent_dlim);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.accurate_x_percent_dlim");
+    }
+    if(private_nh_xp_mv_walk.getParam("accurate_y_percent_dlim", xp_mv_walk.accurate_y_percent_dlim)){
+        ROS_INFO("xp_mv_walk.accurate_y_percent_dlim: %f", xp_mv_walk.accurate_y_percent_dlim);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.accurate_y_percent_dlim");
+    }
+    if(private_nh_xp_mv_walk.getParam("accurate_th_percent_dlim", xp_mv_walk.accurate_th_percent_dlim)){
+        ROS_INFO("xp_mv_walk.accurate_th_percent_dlim: %f", xp_mv_walk.accurate_th_percent_dlim);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.accurate_th_percent_dlim");
+    }
+    if(private_nh_xp_mv_walk.getParam("arm_el_pitch", xp_mv_walk.arm_el_pitch)){
+        ROS_INFO("xp_mv_walk.arm_el_pitch: %f", xp_mv_walk.arm_el_pitch);
+    } else{
+        ROS_ERROR("failed to get xp_mv_walk.arm_el_pitch");
+    }
+   
+    ros::NodeHandle private_nh_xp_dlim_wait_x(std::string("~")+"xp_dlim_wait_x");
+    if(private_nh_xp_dlim_wait_x.getParam("dlim", xp_dlim_wait_x.dlim)){
+        ROS_INFO("xp_dlim_wait_x.dlim: %f", xp_dlim_wait_x.dlim);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_x.dlim");
+    }
+    if(private_nh_xp_dlim_wait_x.getParam("wait_time", xp_dlim_wait_x.wait_time)){
+        ROS_INFO("xp_dlim_wait_x.wait_time: %f", xp_dlim_wait_x.wait_time);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_x.wait_time");
+    }
+
+    ros::NodeHandle private_nh_xp_dlim_wait_y(std::string("~")+"xp_dlim_wait_y");
+    if(private_nh_xp_dlim_wait_y.getParam("dlim", xp_dlim_wait_y.dlim)){
+        ROS_INFO("xp_dlim_wait_y.dlim: %f", xp_dlim_wait_y.dlim);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_y.dlim");
+    }
+    if(private_nh_xp_dlim_wait_y.getParam("wait_time", xp_dlim_wait_y.wait_time)){
+        ROS_INFO("xp_dlim_wait_y.wait_time: %f", xp_dlim_wait_y.wait_time);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_y.wait_time");
+    }
+
+    ros::NodeHandle private_nh_xp_dlim_wait_theta(std::string("~")+"xp_dlim_wait_theta");
+    if(private_nh_xp_dlim_wait_theta.getParam("dlim", xp_dlim_wait_theta.dlim)){
+        ROS_INFO("xp_dlim_wait_theta.dlim: %f", xp_dlim_wait_theta.dlim);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_theta.dlim");
+    }
+    if(private_nh_xp_dlim_wait_theta.getParam("wait_time", xp_dlim_wait_theta.wait_time)){
+        ROS_INFO("xp_dlim_wait_theta.wait_time: %f", xp_dlim_wait_theta.wait_time);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_theta.wait_time");
+    }
+
+    // ピッチを変更する比率
+    ros::NodeHandle private_nh_xp_dlim_wait_pitch(std::string("~")+"xp_dlim_wait_pitch");
+    if(private_nh_xp_dlim_wait_pitch.getParam("dlim", xp_dlim_wait_pitch.dlim)){
+        ROS_INFO("xp_dlim_wait_pitch.dlim: %f", xp_dlim_wait_pitch.dlim);
+    } else{
+        ROS_ERROR("failed to get xp_dlim_wait_pitch.dlim");
+    }
+
+}
+
+
 int main( int argc, char *argv[] )
 {
     ros::init(argc, argv, "hajime_walk");
@@ -334,7 +836,7 @@ int main( int argc, char *argv[] )
     ros::Publisher left_shoulder_roll_pub = nh.advertise<std_msgs::Float64>("/left_shoulder_roll_controller/command", 1);
     ros::Publisher left_waist_pitch_pub = nh.advertise<std_msgs::Float64>("/left_waist_pitch_controller/command", 1);
     ros::Publisher left_waist_roll_pub = nh.advertise<std_msgs::Float64>("/left_waist_roll_controller/command", 1);
-    ros::Publisher left_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/left_waist_yaw_contyawer/command", 1);
+    ros::Publisher left_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/left_waist_yaw_controller/command", 1);
 
     ros::Publisher right_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/right_ankle_pitch_controller/command", 1);
     ros::Publisher right_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/right_ankle_roll_controller/command", 1);
@@ -344,7 +846,7 @@ int main( int argc, char *argv[] )
     ros::Publisher right_shoulder_roll_pub = nh.advertise<std_msgs::Float64>("/right_shoulder_roll_controller/command", 1);
     ros::Publisher right_waist_pitch_pub = nh.advertise<std_msgs::Float64>("/right_waist_pitch_controller/command", 1);
     ros::Publisher right_waist_roll_pub = nh.advertise<std_msgs::Float64>("/right_waist_roll_controller/command", 1);
-    ros::Publisher right_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/right_waist_yaw_contyawer/command", 1);
+    ros::Publisher right_waist_yaw_pub = nh.advertise<std_msgs::Float64>("/right_waist_yaw_controller/command", 1);
 
     std_msgs::Float64 rad;
     int i;
@@ -355,9 +857,10 @@ int main( int argc, char *argv[] )
     //load_pc_motion("motions");
     //offset_load((char *)"/home/rdc-lab/catkin_ws/src/opr_ros/hajime_walk_ros/src/offset_angle.txt", servo_offset);
 
-    std::string eeprom_path = ros::package::getPath("hajime_walk_ros") + "/config/eeprom_list.txt";
-    nh.getParam("eeprom_path", eeprom_path);
-    eeprom_load((char *) eeprom_path.c_str());
+    //std::string eeprom_path = ros::package::getPath("hajime_walk_ros") + "/config/eeprom_list.txt";
+    //nh.getParam("eeprom_path", eeprom_path);
+    //eeprom_load((char *) eeprom_path.c_str());
+    load_eeprom();
 
     flag_gyro.zero = ON;
 
