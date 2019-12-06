@@ -69,7 +69,7 @@ src/motion.c              src/mvtbl.c               src/b3m.cpp
 src/serv.c                src/servo_rs.c            src/serv_init.c
 src/sq_motion.c           src/sq_ready.c            src/sq_start.c
 src/sq_straight.c         src/sq_walk.c             src/var_init.c
-src/pc_motion.cpp         src/OrientationEstimator.cpp
+src/pc_motion.cpp         
 
 src/acc.h                 src/calc_deg.h            src/calc_mv.h
 src/cntr.h                src/func.h                src/gyro.h
@@ -78,7 +78,7 @@ src/mvtbl.h               src/b3m.h                 src/serv.h
 src/servo_rs.h            src/serv_init.h           src/sq_motion.h
 src/sq_ready.h            src/sq_start.h            src/sq_straight.h
 src/sq_walk.h             src/var.h                 src/pc_motion.h
-src/OrientationEstimator.h                          src/KSerialPort.h
+src/KSerialPort.h
 )
 
 SET(hr46_b3m_LIBRARIES

@@ -34,13 +34,10 @@
 #include    <assert.h>
 #include    <stdio.h>
 #include    <math.h>
-//#include  <KSerialPort.h>
 #include    <boost/thread.hpp>
 #include    <string>
 
 #include "pc_motion.h"
-//#include  "ADIS16375.h"
-//#include  "OrientationEstimator.h"
 
 extern "C" {
 #include    "var.h"
