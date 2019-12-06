@@ -41,8 +41,8 @@ void	cntr( void )
 	calc_mv();				/*	calculate trajectory tables			*/
 	calc_z();				/*	calculate leg length by hip roll 	*/
 	kine();					/*	calculate inv. kinetics				*/
-	//acc_fun();				/*	acceleration sensor					*/
-	//gyro_fun();				/*	gyro sensor							*/
+	acc_fun();				/*	acceleration sensor					*/
+	gyro_fun();				/*	gyro sensor							*/
 	calc_deg();				/*	calculate joint angle by inv. kinetics data	*/
 	serv();					/*	servo motor control					*/
 
