@@ -2,14 +2,14 @@
 <launch>
 
     <!-- Load URDF model -->
-    <arg name="model" default="$(find opr_description)/robots/manipulator_only.xacro" />
+    <arg name="model" default="$(find opr_description)/robots/gankenkun_v3.xacro" />
     <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
     <!-- Load Kondo B3M parameters -->
-    <rosparam file="$(find opr_kondo_driver)/config/gankenkun_v3_driver.yaml" command="load"/>
+    <rosparam file="$(find opr_kondo_driver)/config/gankenkun_v3_driver.yaml" command="load" ns="opr_kondo_driver"/>
 
     <!-- Kondo driver -->
-    <node name="kondo_driver" pkg="opr_kondo_driver" type="kondo_driver" args="head_yaw_driver" output="screen" />
+    <node name="opr_kondo_driver" pkg="opr_kondo_driver" type="kondo_driver" args="head_yaw_driver" output="screen" />
 
     <!-- robot state publisher -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
