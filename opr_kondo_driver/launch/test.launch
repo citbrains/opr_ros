@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Load URDF model -->
+    <arg name="model" default="$(find opr_description)/urdf/sample.urdf" />
+    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+
+    <!-- Load Kondo B3M parameters -->
+    <rosparam file="$(find opr_kondo_driver)/config/test.yaml" command="load"/>
+
+    <!-- Kondo driver -->
+    <node name="kondo_driver" pkg="opr_kondo_driver" type="kondo_driver" args="head_yaw_driver" output="screen" />
+
+    <!-- robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+</launch>
