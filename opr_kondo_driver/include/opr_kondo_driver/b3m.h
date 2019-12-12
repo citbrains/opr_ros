@@ -204,12 +204,10 @@ int b3m_trx_timeout(B3MData * r, UINT bytes_out, UINT bytes_in, long timeout);
 
 // position commands
 int b3m_set_angle(B3MData * r, UINT id, int pos);
-int b3m_set_velocity(B3MData * r, UINT id, int vel100);
 int b3m_set_trajectory_mode(B3MData * r, UINT id, int trajectory_mode);
 int b3m_set_angle_period(B3MData * r, UINT id, int *deg100, int period_ms);
 int b3m_set_angle_velocity(B3MData * r, UINT id, int *deg100, int velocity_deg100);
 int b3m_servo_mode(B3MData * r, UINT id, UCHAR option);
-int b3m_set_position(B3MData * r, UINT id, int deg100, int ms);
 
 // servo setting commands
 int b3m_get_angle(B3MData * r, UINT id, int *deg100);
@@ -223,8 +221,6 @@ int b3m_set_stretch(B3MData * r, UINT id, UCHAR stretch);
 int b3m_set_speed(B3MData * r, UINT id, int speed);
 int b3m_set_current_limit(B3MData * r, UINT id, int curlim);
 int b3m_set_temperature_limit(B3MData * r, UINT id, int templim);
-int b3m_set_torque(B3MData * r, UINT id, short smode);
-int b3m_reset_error(B3MData * r, UINT id);
 
 // set servo id (for use when 1 servo is connected)
 int b3m_get_id(B3MData * r);

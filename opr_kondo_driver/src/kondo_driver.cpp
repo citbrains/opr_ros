@@ -26,10 +26,9 @@ int radian_to_deg100 (double radian)
     return radian*RAD_TO_DEG;
 }
 
-class KondoMotor 
+class KondoMotor
 {
     private:
-        bool motor_power;
         ros::ServiceServer power_service;
         int id;
         B3MData* b3m;
@@ -40,21 +39,12 @@ class KondoMotor
         int min_angle, max_angle;
         int dir;
         double offset;
+
     public:
         double cmd, pos, vel, eff;
         std::string joint_name;
-
-/*
-        bool set_power (kondo_driver::setPower::Request &req, kondo_driver::setPower::Response &res) {
-            ROS_INFO("id %d, request: %d", this->id, req.request);
-            motor_power = req.request;
-            res.result = req.request;
-            return true;
-        }
-*/
-
-        KondoMotor (B3MData* b3m, std::string actuator_name, hardware_interface::JointStateInterface& state_interface, hardware_interface::PositionJointInterface& pos_interface) : cmd(0), pos(0), vel(0), eff(0), offset(0), dir(1) {
-            motor_power = true;
+        
+        KondoMotor (B3MData* b3m, std::string actuator_name, hardware_interface::JointStateInterface& state_interface, hardware_interface::PositionJointInterface& pos_interface, bool loopback=false) : cmd(0.0), pos(0.0), vel(0.0), eff(0.0), dir(1) {
             this->b3m = b3m;
             ros::NodeHandle nh(std::string("~")+actuator_name);
             if (nh.getParam("id", id)) {
@@ -63,9 +53,6 @@ class KondoMotor
             if (b3m_servo_mode(b3m, id, B3M_OPTIONS_CONTROL_POSITION)) {
                 ROS_WARN("Cannot connect to servo ID: %d", id);
             }
-            //if (b3m_set_trajectory_mode(b3m, id, B3M_OPTIONS_TRAJECTORY_4)) {
-            //    ROS_WARN("Cannot set trajectory mode to servo ID: %d", id);
-            //}
             if (b3m_set_trajectory_mode(b3m, id, B3M_OPTIONS_TRAJECTORY_NORMAL)) {
                 ROS_WARN("Cannot set trajectory mode to servo ID: %d", id);
             }
@@ -81,37 +68,32 @@ class KondoMotor
             if (nh.getParam("max_angle", max_angle)) {
                 ROS_INFO("max_angle: %d", max_angle);
             }
-            /*
             if (nh.getParam("stretch", stretch)) {
                 ROS_INFO("stretch: %d", stretch);
-                set_stretch(stretch);
+                //set_stretch(stretch);
             }
             if (nh.getParam("speed", speed)) {
                 ROS_INFO("speed: %d", speed);
-                set_speed(speed);
+                //set_speed(speed);
             }
             if (nh.getParam("current_limit", curr_limit)) {
                 ROS_INFO("current_limit: %d", curr_limit);
-                set_current_limit(curr_limit);
+                //set_current_limit(curr_limit);
             }
             if (nh.getParam("temperature_limit", temp_limit)) {
                 ROS_INFO("temperature_limit: %d", temp_limit);
-                set_temperature_limit(temp_limit * 100);
+                //set_temperature_limit(temp_limit * 100);
             }
             if (nh.getParam("offset", offset)) {
                 ROS_INFO("offset: %f", offset);
-                cmd = offset;
             }
             if (nh.getParam("direction", dir)) {
-                ROS_INFO("dir: %d", dir);
+                ROS_INFO("direction: %d", dir);
             }
-            */
-
             hardware_interface::JointStateHandle state_handle(joint_name, &pos, &vel, &eff);
             state_interface.registerHandle(state_handle);
             hardware_interface::JointHandle pos_handle(state_interface.getHandle(joint_name), &cmd);
             pos_interface.registerHandle(pos_handle);
-//            power_service = nh.advertiseService(actuator_name+std::string("/set_power"), &KondoMotor::set_power, this);
         }
 
         void update (void) {
@@ -124,35 +106,29 @@ class KondoMotor
             if (radian > max_angle * 3.14 / 180) {
                 radian = max_angle * 3.14 / 180;
             }
-            if (motor_power == true) {
-                radian = radian + offset;
-                deg100 = dir * radian_to_deg100(radian);
-                //deg100 = radian_to_deg100(radian);
+            radian = radian + offset;
+            deg100 = dir * radian_to_deg100(radian);
+            b3m_set_angle(b3m, id, deg100);
+            b3m_get_angle(b3m, id, &deg100);
+            pos = deg100_to_radian(dir * deg100) - offset;
+            eff = pos - radian;
+
+            #if 0
+            if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
+                pos = deg100_to_radian(deg100);
             }
-            else{
-                b3m_set_angle(b3m, id, deg100);
-                b3m_get_angle(b3m, id, &deg100);
-                pos = deg100_to_radian(dir * deg100) - offset;
-                //pos = deg100_to_radian(deg100);
-                eff = pos - radian;
 
-                #if 0
-                if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
-                   pos = deg100_to_radian(deg100);
-                }
-
-                /* get speed */
-                vel = 0;
-                if (!b3m_get_velocity(b3m, id, &deg100)){
-                  vel = deg100_to_radian(deg100);
-                }
-
-                /* get servo current */
-                int pwm_duty_ratio;
-                b3m_get_pwm_duty_ratio(b3m, id, &pwm_duty_ratio);
-                eff = pwm_duty_ratio;
-                #endif
+            /* get speed */
+            vel = 0;
+            if (!b3m_get_velocity(b3m, id, &deg100)){
+                vel = deg100_to_radian(deg100);
             }
+
+            /* get servo current */
+            int pwm_duty_ratio;
+            b3m_get_pwm_duty_ratio(b3m, id, &pwm_duty_ratio);
+            eff = pwm_duty_ratio;
+            #endif
         }
 
         // Set speed parameter
@@ -198,43 +174,46 @@ class KondoMotor
 
 class KondoDriver : public hardware_interface::RobotHW
 {
-  private:
-    hardware_interface::JointStateInterface jnt_state_interface;
-    hardware_interface::PositionJointInterface jnt_pos_interface;
-    B3MData b3m;
-    std::vector<boost::shared_ptr<KondoMotor> > actuator_vector;
+    private:
+        bool loopback;
+        hardware_interface::JointStateInterface jnt_state_interface;
+        hardware_interface::PositionJointInterface jnt_pos_interface;
+        B3MData b3m;
+        std::vector<boost::shared_ptr<KondoMotor> > actuator_vector;
 
-  public:
-    KondoDriver (int num, char** actuators) {
-        ros::NodeHandle nh("~");
-        std::string serial_port;
-        nh.param<std::string>("serial_port", serial_port, "/dev/ttyUSB0");
-        ROS_INFO("serial_port: %s", serial_port.c_str());
-        
-        if (b3m_init(&b3m, serial_port.c_str()) < 0) {
-            ROS_ERROR ("Could not init B3M: %s\n", b3m.error);
-            exit(0);
+    public:
+        KondoDriver (int num, char** actuators) {
+            ros::NodeHandle nh("~");
+            std::string serial_port;
+            nh.param<std::string>("serial_port", serial_port, "/dev/ttyUSB0");
+            ROS_INFO("serial_port: %s", serial_port.c_str());
+            
+            if (b3m_init(&b3m, serial_port.c_str()) < 0) {
+                ROS_ERROR ("Could not init B3M: %s\n", b3m.error);
+                exit(0);
+            }
+
+            for (int i=0; i<num; i++) {
+                boost::shared_ptr<KondoMotor> actuator(new KondoMotor(&b3m, std::string(actuators[i]), jnt_state_interface, jnt_pos_interface, loopback));
+                actuator_vector.push_back(actuator);
+            }
+            registerInterface(&jnt_state_interface);
+            registerInterface(&jnt_pos_interface);
         }
 
-        for (int i=0; i<num; i++) {
-            boost::shared_ptr<KondoMotor> actuator(new KondoMotor(&b3m, std::string(actuators[i]), jnt_state_interface, jnt_pos_interface));
-            actuator_vector.push_back(actuator);
+        void update () {
+            for (int i=0; i<actuator_vector.size(); i++) {
+                actuator_vector[i]->update();
+            }
         }
-        registerInterface(&jnt_state_interface);
-        registerInterface(&jnt_pos_interface);
-    }
 
-    void update () {
-        for (int i=0; i<actuator_vector.size(); i++) {
-            actuator_vector[i]->update();
+        ~KondoDriver () {
+            if (!loopback) {
+                b3m_close (&b3m);
+            }
         }
-    }
-
-    ~KondoDriver () {
-        b3m_close (&b3m);
-    }
-    ros::Time getTime() const {return ros::Time::now();}
-    ros::Duration getPeriod() const {return ros::Duration(0.01);}
+        ros::Time getTime() const {return ros::Time::now();}
+        ros::Duration getPeriod() const {return ros::Duration(0.05);}
 };
 
 int main(int argc, char **argv)
@@ -258,4 +237,5 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
 
