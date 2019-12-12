@@ -356,7 +356,7 @@ int b3m_reset_error(B3MData * r, UINT id)
 	int sum = 0, time = 0;
 
 	// build command
-	r->swap[n++] = 6;                       // length
+	r->swap[n++] = 7;                       // length
 	r->swap[n++] = B3M_CMD_RESET;           // command
 	r->swap[n++] = B3M_RETURN_ERROR_STATUS; // option
 	r->swap[n++] = id;                      // id

@@ -92,7 +92,7 @@ class KondoMotor
                 set_temperature_limit(temp_limit * 100);
             }
             if (nh.getParam("offset", offset)) {
-                ROS_INFO("offset: %d", offset);
+                ROS_INFO("offset: %f", offset);
                 cmd = offset;
                 pos = offset;
             }
@@ -124,7 +124,7 @@ class KondoMotor
             else{
                 b3m_set_angle(b3m, id, deg100);
                 b3m_get_angle(b3m, id, &deg100);
-                pos = dir * (deg100_to_radian(deg100) - offset);
+                pos = deg100_to_radian(dir * deg100) - offset;
 
                 #if 0
                 if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
