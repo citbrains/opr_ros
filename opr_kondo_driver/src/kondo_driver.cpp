@@ -60,11 +60,17 @@ class KondoMotor
             if (nh.getParam("id", id)) {
                 ROS_INFO("id: %d", id);
             }
-            if (b3m_servo_mode(b3m, id, B3M_OPTIONS_RUN_NORMAL)) {
+            if (b3m_servo_mode(b3m, id, B3M_OPTIONS_CONTROL_POSITION)) {
                 ROS_WARN("Cannot connect to servo ID: %d", id);
             }
-            if (b3m_set_trajectory_mode(b3m, id, B3M_OPTIONS_TRAJECTORY_4)) {
+            //if (b3m_set_trajectory_mode(b3m, id, B3M_OPTIONS_TRAJECTORY_4)) {
+            //    ROS_WARN("Cannot set trajectory mode to servo ID: %d", id);
+            //}
+            if (b3m_set_trajectory_mode(b3m, id, B3M_OPTIONS_TRAJECTORY_NORMAL)) {
                 ROS_WARN("Cannot set trajectory mode to servo ID: %d", id);
+            }
+            if (b3m_servo_mode(b3m, id, B3M_OPTIONS_RUN_NORMAL)) {
+                ROS_WARN("Cannot connect to servo ID: %d", id);
             }
             if (nh.getParam("joint_name", joint_name)) {
                 ROS_INFO("joint_name: %s", joint_name.c_str());
@@ -75,6 +81,7 @@ class KondoMotor
             if (nh.getParam("max_angle", max_angle)) {
                 ROS_INFO("max_angle: %d", max_angle);
             }
+            /*
             if (nh.getParam("stretch", stretch)) {
                 ROS_INFO("stretch: %d", stretch);
                 set_stretch(stretch);
@@ -94,11 +101,11 @@ class KondoMotor
             if (nh.getParam("offset", offset)) {
                 ROS_INFO("offset: %f", offset);
                 cmd = offset;
-                pos = offset;
             }
             if (nh.getParam("direction", dir)) {
                 ROS_INFO("dir: %d", dir);
             }
+            */
 
             hardware_interface::JointStateHandle state_handle(joint_name, &pos, &vel, &eff);
             state_interface.registerHandle(state_handle);
@@ -120,11 +127,14 @@ class KondoMotor
             if (motor_power == true) {
                 radian = radian + offset;
                 deg100 = dir * radian_to_deg100(radian);
+                //deg100 = radian_to_deg100(radian);
             }
             else{
                 b3m_set_angle(b3m, id, deg100);
                 b3m_get_angle(b3m, id, &deg100);
                 pos = deg100_to_radian(dir * deg100) - offset;
+                //pos = deg100_to_radian(deg100);
+                eff = pos - radian;
 
                 #if 0
                 if (!b3m_set_angle_velocity(b3m, id, &deg100, DESIRED_VELOCITY)){
