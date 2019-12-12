@@ -29,7 +29,7 @@
 
 int target_deg100[256];
 
-#define BAUDRATE 1500000
+#define BAUDRATE 1000000
 
 // Convenience macros
 #define b3m_error(ki, err) { \

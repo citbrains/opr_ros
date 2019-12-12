@@ -10,8 +10,8 @@ head_yaw_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 left_shoulder_pitch_driver:  
     joint_name: left_shoulder_pitch_joint
@@ -23,7 +23,7 @@ left_shoulder_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 left_shoulder_roll_driver:   
     joint_name: left_shoulder_roll_joint
@@ -34,8 +34,8 @@ left_shoulder_roll_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: -0.25
 
 left_elbow_pitch_driver:     
     joint_name: left_elbow_pitch_joint
@@ -46,8 +46,8 @@ left_elbow_pitch_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 left_waist_yaw_driver:       
     joint_name: left_waist_yaw_joint
@@ -59,7 +59,7 @@ left_waist_yaw_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 left_waist_roll_driver:      
     joint_name: left_waist_roll_joint
@@ -70,8 +70,8 @@ left_waist_roll_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 left_waist_pitch_driver:     
     joint_name: left_waist_pitch_joint
@@ -83,7 +83,7 @@ left_waist_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 left_knee_pitch_driver:      
     joint_name: left_knee_pitch_joint
@@ -95,7 +95,7 @@ left_knee_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 left_ankle_pitch_driver:     
     joint_name: left_ankle_pitch_joint
@@ -107,7 +107,7 @@ left_ankle_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 left_ankle_roll_driver:      
     joint_name: left_ankle_roll_joint
@@ -119,7 +119,7 @@ left_ankle_roll_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 right_shoulder_pitch_driver:  
     joint_name: right_shoulder_pitch_joint
@@ -130,8 +130,8 @@ right_shoulder_pitch_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.28
 
 right_shoulder_roll_driver:   
     joint_name: right_shoulder_roll_joint
@@ -142,8 +142,8 @@ right_shoulder_roll_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.25
 
 right_elbow_pitch_driver:     
     joint_name: right_elbow_pitch_joint
@@ -155,7 +155,7 @@ right_elbow_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 right_waist_yaw_driver:       
     joint_name: right_waist_yaw_joint
@@ -167,7 +167,7 @@ right_waist_yaw_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
 right_waist_roll_driver:      
     joint_name: right_waist_roll_joint
@@ -178,8 +178,8 @@ right_waist_roll_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 right_waist_pitch_driver:     
     joint_name: right_waist_pitch_joint
@@ -190,8 +190,8 @@ right_waist_pitch_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 right_knee_pitch_driver:      
     joint_name: right_knee_pitch_joint
@@ -202,8 +202,8 @@ right_knee_pitch_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: 0.0
 
 right_ankle_pitch_driver:     
     joint_name: right_ankle_pitch_joint
@@ -214,8 +214,8 @@ right_ankle_pitch_driver:
     speed: 127
     current_limit: 3000
     temperature_limit: 80
-    direction: 1
-    offset: 0
+    direction: -1
+    offset: -0.25
 
 right_ankle_roll_driver:      
     joint_name: right_ankle_roll_joint
@@ -227,5 +227,5 @@ right_ankle_roll_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: 1
-    offset: 0
+    offset: 0.0
 
