@@ -35,7 +35,7 @@ left_shoulder_roll_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: -1
-    offset: -0.25
+    offset: 0.25
 
 left_elbow_pitch_driver:     
     joint_name: left_elbow_pitch_joint
@@ -131,7 +131,7 @@ right_shoulder_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: -1
-    offset: 0.28
+    offset: -0.28
 
 right_shoulder_roll_driver:   
     joint_name: right_shoulder_roll_joint
@@ -143,7 +143,7 @@ right_shoulder_roll_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: -1
-    offset: 0.25
+    offset: -0.25
 
 right_elbow_pitch_driver:     
     joint_name: right_elbow_pitch_joint
@@ -215,7 +215,7 @@ right_ankle_pitch_driver:
     current_limit: 3000
     temperature_limit: 80
     direction: -1
-    offset: -0.25
+    offset: 0.25
 
 right_ankle_roll_driver:      
     joint_name: right_ankle_roll_joint
