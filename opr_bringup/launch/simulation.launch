@@ -7,7 +7,7 @@
     <include file="$(find opr_ros_control)/launch/gazebo_controller_v3.launch" />
 
     <!-- load ros controller -->
-    <include file="$(find opr_ros_control)/launch/trajectory_position_controller_v3.launch" />
+    <include file="$(find opr_ros_control)/launch/position_controller_v3.launch" />
 
     <!-- load gazebo -->
     <include file="$(find opr_gazebo)/launch/gazebo.launch">
