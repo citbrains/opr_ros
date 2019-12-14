@@ -620,11 +620,11 @@ void load_eeprom()
 void motionCallback(const hajime_walk_ros::MotionCommand::ConstPtr &msg)
 {
     motion_flag = true;
-    std::string s = std::to_string(msg->no_motion);
-    if(msg->no_motion < 100){
+    std::string s = std::to_string(msg->motion_id);
+    if(msg->motion_id < 100){
         s = "0" + s;
     }
-    if(msg->no_motion < 10){
+    if(msg->motion_id < 10){
         s = "0" + s;
     }
     char const *pchar = s.c_str();
