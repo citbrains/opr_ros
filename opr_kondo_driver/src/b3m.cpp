@@ -31,7 +31,7 @@ unsigned short b3m_control_ki2[SERV_NUM] = {0};
 unsigned short b3m_control_static_friction2[SERV_NUM] = {0};
 unsigned short b3m_control_dynamic_friction2[SERV_NUM] = {0};
 unsigned short b3m_goal_time_slow[SERV_NUM] = {SERVO_B3M_DATA_GOAL_TIME_SLOW};
-unsigned short b3m_servo_offset[SERV_NUM] = {0};
+signed short b3m_servo_offset[SERV_NUM] = {0};
 
 // 通信ポートのオープン
 int RSOpen( const char *portname )

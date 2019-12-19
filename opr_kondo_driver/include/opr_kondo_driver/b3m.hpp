@@ -183,7 +183,7 @@ extern unsigned short b3m_control_ki2[SERV_NUM];
 extern unsigned short b3m_control_static_friction2[SERV_NUM];
 extern unsigned short b3m_control_dynamic_friction2[SERV_NUM];
 extern unsigned short b3m_control_dynamic_friction2[SERV_NUM];
-extern unsigned short b3m_servo_offset[SERV_NUM];
+extern signed short b3m_servo_offset[SERV_NUM];
 
 struct ServoStatus
 {
