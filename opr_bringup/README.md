@@ -16,7 +16,7 @@ $ roslaunch opr_bringup simulation.launch
 ```
 opr_bringup
 |-CMakeLists.txt
-|-launch
+|-launch/
   |-display_xacro.launch
 |-package.xml
 |-README.md

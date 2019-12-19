@@ -26,14 +26,14 @@ $ roslaunch opr_ros_control trajectory_position_controller.launch
 ```
 opr_ros_control
 |-CMakeLists.txt
-|-config
+|-config/
   |-effort_controller.yaml
   |-gazebo_controller.yaml
   |-joint_state_controller.yaml
   |-position_controller.yaml
   |-trajectory_effort_controller.yaml
   |-trajectory_position_controller.yaml
-|-launch
+|-launch/
   |-gazebo_controller.launch
   |-position_controller.launch
   |-trajectory_position_controller.launch

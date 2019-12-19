@@ -1,5 +1,5 @@
 # opr_ros
-ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Kinetic
+ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Kinetic.
 
 ## Installation
 1. Install ros
@@ -9,7 +9,8 @@ $ sudo apt install python-catkin-tools
 $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws
 $ catkin init
-$ source `catkin locate --shell-verbs`
+$ echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
+$ echo 'source `catkin locate --shell-verbs`' >> ~/.bashrc
 ```
 3. clone repository
 ```
@@ -38,6 +39,8 @@ $ roslaunch opr_bringup simulation.launch
 ```
 
 ## Package Description
+* hajime_walk_ros
+  * collection of files related hajime walk/motion control 
 * opr_bringup
   * collection of launch files to bring up actual robot and robot simulation
 * opr_description

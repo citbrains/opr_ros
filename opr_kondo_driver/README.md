@@ -9,7 +9,7 @@ $ roslaunch opr_kondo_driver opr_kondo_driver.launch
 ```
 ## Package Structure
 ```
-opr_bringup
+opr_kondo_driver
 |-CMakeLists.txt
 |-config/
   |-166.yaml

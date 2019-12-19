@@ -29,7 +29,7 @@ $ roslaunch opr_gazebo gazebo.launch model:='$(find opr_description)/robots/gank
 ```
 opr_gazebo
 |-CMakeLists.txt
-|-launch
+|-launch/
   |-gazebo.launch
 |-package.xml
 |-README.md
