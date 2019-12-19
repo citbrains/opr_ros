@@ -168,6 +168,8 @@ class KondoDriver : public hardware_interface::RobotHW
             registerInterface(&jnt_state_interface);
             registerInterface(&jnt_pos_interface);
 
+            ROS_INFO("initialize b3m");
+            B3MInitializeVariable();
             for (int i=0; i<actuator_vector.size(); i++) {
                 int index = actuator_vector[i]->id - 1;
                 b3m_control_kp0[index] = actuator_vector[i]->control_kp0;
@@ -190,6 +192,7 @@ class KondoDriver : public hardware_interface::RobotHW
             }
 
             B3MInitializeSequence();
+            ROS_INFO("initialize complete");
         }
 
         void update()
@@ -207,6 +210,7 @@ class KondoDriver : public hardware_interface::RobotHW
         }
 
         ~KondoDriver () {
+            //Write_Servo_B3M_All_2Kport(B3M_SERVO_SERVO_MODE, &b3m_free_mode[0], 1);
             RSClose();
         }
 

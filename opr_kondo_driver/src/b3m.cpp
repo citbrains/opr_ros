@@ -7,31 +7,62 @@ extern "C"
 static KSerialPort port;
 static short servo_rs_id_d[SERV_NUM]
     = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
-unsigned short b3m_normal_mode[SERV_NUM] = {B3M_OPTIONS_RUN_NORMAL};
-unsigned short b3m_free_mode[SERV_NUM] = {B3M_OPTIONS_RUN_FREE};
-unsigned short b3m_control_mode[SERV_NUM] = {B3M_OPTIONS_CONTROL_POSITION};
+unsigned short b3m_normal_mode[SERV_NUM];
+unsigned short b3m_free_mode[SERV_NUM];
+unsigned short b3m_control_mode[SERV_NUM];
 unsigned short b3m_run_or_control[SERV_NUM];
-unsigned short b3m_trajectory_normal[SERV_NUM]= {B3M_OPTIONS_TRAJECTORY_NORMAL};
-unsigned short b3m_trajectory_even[SERV_NUM] = {B3M_OPTIONS_TRAJECTORY_1};
-unsigned short b3m_gain_preset[SERV_NUM] = {B3M_CONTROL_GAIN_PRESET_DEF};
-unsigned short b3m_deadband_width[SERV_NUM] = {15};
-unsigned short b3m_control_kp0[SERV_NUM] = {0};
-unsigned short b3m_control_kd0[SERV_NUM] = {0};
-unsigned short b3m_control_ki0[SERV_NUM] = {0};
-unsigned short b3m_control_static_friction0[SERV_NUM] = {0};
-unsigned short b3m_control_dynamic_friction0[SERV_NUM] = {0};
-unsigned short b3m_control_kp1[SERV_NUM] = {0};
-unsigned short b3m_control_kd1[SERV_NUM] = {0};
-unsigned short b3m_control_ki1[SERV_NUM] = {0};
-unsigned short b3m_control_static_friction1[SERV_NUM] = {0};
-unsigned short b3m_control_dynamic_friction1[SERV_NUM] = {0};
-unsigned short b3m_control_kp2[SERV_NUM] = {0};
-unsigned short b3m_control_kd2[SERV_NUM] = {0};
-unsigned short b3m_control_ki2[SERV_NUM] = {0};
-unsigned short b3m_control_static_friction2[SERV_NUM] = {0};
-unsigned short b3m_control_dynamic_friction2[SERV_NUM] = {0};
-unsigned short b3m_goal_time_slow[SERV_NUM] = {SERVO_B3M_DATA_GOAL_TIME_SLOW};
-signed short b3m_servo_offset[SERV_NUM] = {0};
+unsigned short b3m_trajectory_normal[SERV_NUM];
+unsigned short b3m_trajectory_even[SERV_NUM];
+unsigned short b3m_gain_preset[SERV_NUM];
+unsigned short b3m_deadband_width[SERV_NUM];
+unsigned short b3m_control_kp0[SERV_NUM];
+unsigned short b3m_control_kd0[SERV_NUM];
+unsigned short b3m_control_ki0[SERV_NUM];
+unsigned short b3m_control_static_friction0[SERV_NUM];
+unsigned short b3m_control_dynamic_friction0[SERV_NUM];
+unsigned short b3m_control_kp1[SERV_NUM];
+unsigned short b3m_control_kd1[SERV_NUM];
+unsigned short b3m_control_ki1[SERV_NUM];
+unsigned short b3m_control_static_friction1[SERV_NUM];
+unsigned short b3m_control_dynamic_friction1[SERV_NUM];
+unsigned short b3m_control_kp2[SERV_NUM];
+unsigned short b3m_control_kd2[SERV_NUM];
+unsigned short b3m_control_ki2[SERV_NUM];
+unsigned short b3m_control_static_friction2[SERV_NUM];
+unsigned short b3m_control_dynamic_friction2[SERV_NUM];
+unsigned short b3m_goal_time_slow[SERV_NUM];
+signed short b3m_servo_offset[SERV_NUM];
+
+void B3MInitializeVariable()
+{
+    for(int i=0; i<SERV_NUM; i++){
+        b3m_normal_mode[i] = B3M_OPTIONS_RUN_NORMAL;
+        b3m_free_mode[i] = B3M_OPTIONS_RUN_FREE;
+        b3m_control_mode[i] = B3M_OPTIONS_CONTROL_POSITION;
+        b3m_run_or_control[i] = b3m_free_mode[i-1] + b3m_control_mode[i-1];
+        b3m_trajectory_normal[i]= B3M_OPTIONS_TRAJECTORY_NORMAL;
+        b3m_trajectory_even[i] = B3M_OPTIONS_TRAJECTORY_1;
+        b3m_gain_preset[i] = B3M_CONTROL_GAIN_PRESET_DEF;
+        b3m_deadband_width[i] = 15;
+        b3m_control_kp0[i] = 0;
+        b3m_control_kd0[i] = 0;
+        b3m_control_ki0[i] = 0;
+        b3m_control_static_friction0[i] = 0;
+        b3m_control_dynamic_friction0[i] = 0;
+        b3m_control_kp1[i] = 0;
+        b3m_control_kd1[i] = 0;
+        b3m_control_ki1[i] = 0;
+        b3m_control_static_friction1[i] = 0;
+        b3m_control_dynamic_friction1[i] = 0;
+        b3m_control_kp2[i] = 0;
+        b3m_control_kd2[i] = 0;
+        b3m_control_ki2[i] = 0;
+        b3m_control_static_friction2[i] = 0;
+        b3m_control_dynamic_friction2[i] = 0;
+        b3m_goal_time_slow[i] = SERVO_B3M_DATA_GOAL_TIME_SLOW;
+        b3m_servo_offset[i] = 0;
+    }
+}
 
 // 通信ポートのオープン
 int RSOpen( const char *portname )
@@ -567,6 +598,10 @@ void B3MInitializeSequence()
     short mode_sq_start_prev = -1;
     short mode_sq_start = 0;
     bool flag_md_start_end = false;
+    for(int i=0; i<SERV_NUM; i++){
+        b3m_run_or_control[i] = b3m_free_mode[i-1] + b3m_control_mode[i-1];
+    }
+
     while(!flag_md_start_end){
         if(mode_sq_start != mode_sq_start_prev){
             switch(mode_sq_start){
@@ -696,7 +731,7 @@ void B3MInitializeSequence()
                         }
                         Write_All_B3M_Position_or_Time( (unsigned short *)&position[0], &b3m_goal_time_slow[0], 2 );
                     }
-                    mode_sq_time    =   3.0f;
+                    mode_sq_time    =   30.0f;
                     break;
 
                 case 23:
@@ -723,6 +758,7 @@ void B3MInitializeSequence()
         else{
             mode_sq_time -= 0.01;
         }
+        usleep(1000);
     }
 }
 

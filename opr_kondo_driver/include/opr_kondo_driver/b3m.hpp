@@ -165,8 +165,14 @@ extern "C"
 #define COM_PORT	"/dev/kondoservo"
 #define MAX_TORQUE	0x64
 
+extern unsigned short b3m_normal_mode[SERV_NUM];
+extern unsigned short b3m_free_mode[SERV_NUM];
+extern unsigned short b3m_control_mode[SERV_NUM];
+extern unsigned short b3m_run_or_control[SERV_NUM];
+extern unsigned short b3m_trajectory_normal[SERV_NUM];
+extern unsigned short b3m_trajectory_even[SERV_NUM];
 extern unsigned short b3m_gain_preset[SERV_NUM];
-extern unsigned short b3m_goal_position[SERV_NUM];
+extern unsigned short b3m_deadband_width[SERV_NUM];
 extern unsigned short b3m_control_kp0[SERV_NUM];
 extern unsigned short b3m_control_kd0[SERV_NUM];
 extern unsigned short b3m_control_ki0[SERV_NUM];
@@ -183,6 +189,7 @@ extern unsigned short b3m_control_ki2[SERV_NUM];
 extern unsigned short b3m_control_static_friction2[SERV_NUM];
 extern unsigned short b3m_control_dynamic_friction2[SERV_NUM];
 extern unsigned short b3m_control_dynamic_friction2[SERV_NUM];
+extern unsigned short b3m_goal_time_slow[SERV_NUM];
 extern signed short b3m_servo_offset[SERV_NUM];
 
 struct ServoStatus
@@ -209,6 +216,7 @@ int RSOpen( const char *portname );
 void RSClose( void );
 int Write_Servo_B3M_All_2Kport(unsigned char addr,unsigned short *pdata,short len);
 int Write_All_B3M_Position_or_Time(unsigned short *pdata, unsigned short *tdata, short len );
+void B3MInitializeVariable(void);
 void B3MInitializeSequence(void);
 #ifdef __cplusplus
 }// extern "C"
