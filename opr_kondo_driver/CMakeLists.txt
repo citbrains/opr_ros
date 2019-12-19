@@ -20,8 +20,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(kondo_driver src/kondo_driver.cpp src/b3m.c)
-target_link_libraries(kondo_driver ${catkin_LIBRARIES} usb ftdi)
-
 add_executable(opr_kondo_driver_v3 src/opr_kondo_driver_v3.cpp src/b3m.cpp)
 target_link_libraries(opr_kondo_driver_v3 ${catkin_LIBRARIES} usb ftdi)
