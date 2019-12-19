@@ -6,10 +6,10 @@
     <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
     <!-- Load Kondo B3M parameters -->
-    <rosparam file="$(find opr_kondo_driver)/config/gankenkun_v3_driver.yaml" command="load" ns="opr_kondo_driver"/>
+    <rosparam file="$(find opr_kondo_driver)/config/166.yaml" command="load" ns="opr_kondo_driver"/>
 
     <!-- Kondo driver -->
-    <node name="opr_kondo_driver" pkg="opr_kondo_driver" type="kondo_driver" output="screen" args="
+    <node name="opr_kondo_driver" pkg="opr_kondo_driver" type="opr_kondo_driver_v3" output="screen" args="
         head_yaw_driver
         left_shoulder_pitch_driver
         left_shoulder_roll_driver
