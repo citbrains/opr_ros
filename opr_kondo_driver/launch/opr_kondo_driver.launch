@@ -6,7 +6,7 @@
     <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
     <!-- Load Kondo B3M parameters -->
-    <rosparam file="$(find opr_kondo_driver)/config/166.yaml" command="load" ns="opr_kondo_driver"/>
+    <rosparam file="$(find opr_kondo_driver)/config/driver_sample.yaml" command="load" ns="opr_kondo_driver"/>
 
     <!-- Kondo driver -->
     <node name="opr_kondo_driver" pkg="opr_kondo_driver" type="opr_kondo_driver_v3" output="screen" args="
