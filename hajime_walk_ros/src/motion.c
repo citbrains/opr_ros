@@ -22,8 +22,7 @@
 #include	"sq_ready.h"
 #include	"sq_walk.h"
 #include	"sq_motion.h"
-#include    "servo_rs.h"
-#include    "b3m.h"
+#include	"servo_rs.h"
 
 /*--------------------------------------*/
 /*	motion								*/

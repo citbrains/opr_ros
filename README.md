@@ -37,6 +37,16 @@ $ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/rob
 ```
 $ roslaunch opr_bringup simulation.launch
 ```
+* Real Robot
+```
+$ roslaunch opr_bringup gankenkun_v3.launch
+```
+* Hajime Walk Control
+
+First launch either the **Gazebo Simulation** or **Real Robot** then launch the following:
+```
+$ roslaunch hajime_walk_ros hajime_walk.launch
+```
 
 ## Package Description
 * hajime_walk_ros

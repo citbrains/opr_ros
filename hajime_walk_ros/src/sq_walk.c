@@ -21,7 +21,6 @@
 #include	"calc_mv.h"
 #include	"sq_ready.h"
 #include 	"servo_rs.h"
-#include	"b3m.h"
 #include 	"gyro.h"
 #include 	"kine.h"
 #include 	"mvtbl.h"

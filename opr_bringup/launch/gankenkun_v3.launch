@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- load b3m driver -->
+    <include file="$(find opr_kondo_driver)/launch/opr_kondo_driver.launch" />
+
+    <!-- load ros controller -->
+    <include file="$(find opr_ros_control)/launch/position_controller_v3.launch" />
+
+</launch>

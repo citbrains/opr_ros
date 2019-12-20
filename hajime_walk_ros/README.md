@@ -51,6 +51,27 @@ opr_bringup
 |-CMakeLists.txt
 |-config/
   |-eeprom_list.yaml
+|-include/
+  |-acc.h
+  |-calc_deg.h
+  |-calc_mv.h
+  |-cntr.h
+  |-func.h
+  |-gyro.h
+  |-joy.h
+  |-kine.h
+  |-motion.h
+  |-mvtbl.h
+  |-pc_motion.h
+  |-serv.h
+  |-serv_init.h
+  |-servo_rs.h
+  |-sq_motion.h
+  |-sq_ready.h
+  |-sq_start.h
+  |-sq_straight.h
+  |-sq_walk.h
+  |-var.h
 |-launch/
   |-hajime_walk.launch
 |-msg/
@@ -60,47 +81,22 @@ opr_bringup
 |-README.md
 |-src/
   |-acc.c
-  |-acc.h
-  |-b3m.c
-  |-b3m.h
   |-calc_deg.c
-  |-calc_deg.h
   |-calc_mv.c
-  |-calc_mv.h
   |-cntr.c
-  |-cntr.h
   |-func.c
-  |-func.h
   |-gyro.c
-  |-gyro.h
   |-joy.c
-  |-joy.h
   |-kine.c
-  |-kine.h
-  |-KSerialPort.h
   |-main.cpp
   |-motion.c
-  |-motion.h
   |-mvtbl.c
-  |-mvtbl.h
   |-pc_motion.c
-  |-pc_motion.h
   |-serv.c
-  |-serv.h
   |-serv_init.c
-  |-serv_init.h
   |-sq_motion.c
-  |-sq_motion.h
   |-sq_ready.c
-  |-sq_ready.h
   |-sq_start.c
-  |-sq_start.h
   |-sq_straight.c
-  |-sq_straight.h
   |-sq_walk.c
-  |-sq_walk.h
-  |-var,h
-  |-var_init.h
 ```
-
-

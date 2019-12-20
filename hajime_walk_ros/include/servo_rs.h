@@ -12,11 +12,8 @@
 #ifndef _SERVO_RS_H_
 #define _SERVO_RS_H_
 
-#ifdef _SERVO_RS_C_
 #define	extern
-#endif /* _SERVO_RS_C_ */
 #include	"var.h"
-
 
 
 typedef struct st_xp_servo_rs
@@ -59,28 +56,8 @@ typedef struct st_xv_servo_rs
 /*--------------------------------------*/
 /*	variables							*/
 /*--------------------------------------*/
-extern 	short			servo_rs_id_scif2[SERVO_RS_ID_NUM]		;
-extern 	short			servo_rs_id_scif3[SERVO_RS_ID_NUM]		;
 
 
-extern	unsigned char 	rs405_bpTxBuffer_scif2[2048];
-extern	unsigned char 	rs405_bpTxBuffer_scif3[2048];
-extern	unsigned char 	rs405_bpParameter[96];
-extern	unsigned char 	rs405_bpRxBuffer_scif2[64];
-extern	unsigned char 	rs405_bpRxBuffer_scif3[64];
-extern	short			rs405_bCount;
-extern	short			servo_rs_id;
-//extern	short			servo_rs_address;
-extern	short			servo_rs_len;
-extern	short			servo_rs_sdata;
-extern	short			servo_rs_rdata;
-extern	short			flag_write_servo_rs_scif2;
-extern	short			flag_write_servo_rs_scif3;
-extern	short			flag_read_servo_rs_scif2;
-extern	short			flag_read_servo_rs_scif3;
-extern	short			flag_write_servo_rs_all;
-extern	short			flag_read_servo_rs_all;
-extern	short			flag_servo_rs_test;
 extern 	short			flag_servo_on;
 extern 	short			flag_servo_off;
 extern 	short			flag_servo_output_wait;
@@ -92,8 +69,18 @@ extern	tp_xp_servo_rs	xp_servo_rs_motion;
 extern	tp_xv_servo_rs	xv_servo_rs;
 extern 	short			flag_ukemi;
 
-#ifdef _SERVO_RS_C_
+/*--------------------------------------*/
+/*	function prototypes					*/
+/*--------------------------------------*/
+extern	void	servo_rs_init( void );
+
+extern	void 	write_servo_rs_all( unsigned char, unsigned short *, short );
+extern	void 	read_servo_rs_all( unsigned char, unsigned short *, short );
+extern	void	servo_rs_fun( void );
+extern 	void 	servopos_to_jointdeg( void );
+extern 	void 	servotemp_to_temp( void );
+extern	void 	servocurrent_to_current( void );	//2010.5.8
+
 #undef	extern
-#endif /* _SERVO_RS_C_ */
 
 #endif /* _SERVO_RS_H_ */

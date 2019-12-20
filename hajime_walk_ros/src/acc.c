@@ -18,7 +18,6 @@
 #include	"acc.h"
 #include	"gyro.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 #include	"calc_mv.h"
 #include	"sq_straight.h"
 #include	"sq_start.h"

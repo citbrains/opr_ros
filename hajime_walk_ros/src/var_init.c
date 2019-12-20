@@ -21,7 +21,6 @@
 #include	"var.h"
 #include	"func.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 #include	"motion.h"
 #include	"calc_mv.h"
 #include	"mvtbl.h"
@@ -262,18 +261,6 @@ void	servo_rs_init( void )
 	static const int is_b3m1170[] = {0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     
     short	i;
-	servo_rs_id					=	1;
-//	servo_rs_address			=	SERVO_B3M_ADDR_TORQUE_ENABLE;
-	servo_rs_len				=	1;
-	servo_rs_sdata				=	1;
-	servo_rs_rdata				=	0;
-	flag_write_servo_rs_scif2	=	0;
-	flag_write_servo_rs_scif3	=	0;
-	flag_read_servo_rs_scif2	=	0;
-	flag_read_servo_rs_scif3	=	0;
-	flag_write_servo_rs_all		=	OFF;
-	flag_read_servo_rs_all		=	OFF;
-	flag_servo_rs_test			=	OFF;
 	flag_servo_on				=	OFF;
 	flag_servo_off				=	OFF;
 	flag_servo_output_wait		=	0;
@@ -282,47 +269,4 @@ void	servo_rs_init( void )
 	flag_read_servo_position	=	0;
 	flag_ukemi					=	0;	//2010.4.29
 
-	for( i = 0; i < SERV_NUM; i++ )
-	{
-		xp_servo_rs.normal_mode[i]          =	B3M_OPTIONS_RUN_NORMAL;
-		xp_servo_rs.free_mode[i]			=	B3M_OPTIONS_RUN_FREE;
-		xp_servo_rs.control_mode[i]         =	B3M_OPTIONS_CONTROL_POSITION;
-		xp_servo_rs.run_or_control[i]		=	xp_servo_rs.free_mode[i-1] + xp_servo_rs.control_mode[i-1];
-		xp_servo_rs.trajectory_normal[i]	=	B3M_OPTIONS_TRAJECTORY_NORMAL;
-		xp_servo_rs.trajectory_even[i]      =	B3M_OPTIONS_TRAJECTORY_1;
-		xp_servo_rs.goal_time_slow[i]		=	SERVO_B3M_DATA_GOAL_TIME_SLOW;
-    	xp_servo_rs.gain_preset[i]          =	B3M_CONTROL_GAIN_PRESET_DEF;
-        
-        xp_servo_rs.deadband_width[i]               =   15;
-        xp_servo_rs.control_kp0[i]                  =   is_b3m1170[i] ? 42000 :  35000 ;
-        xp_servo_rs.control_kd0[i]                  =   is_b3m1170[i] ?   400 :    500 ;
-        xp_servo_rs.control_ki0[i]                  =   is_b3m1170[i] ?  1000 :   1800 ;
-        xp_servo_rs.control_static_friction0[i]     =   is_b3m1170[i] ?     0 :      0 ;
-        xp_servo_rs.control_dynamic_friction0[i]    =   is_b3m1170[i] ?     0 :      0 ;
-        xp_servo_rs.control_kp1[i]                  =   is_b3m1170[i] ?     0 :   5500 ;
-        xp_servo_rs.control_kd1[i]                  =   is_b3m1170[i] ?     0 :    100 ;
-        xp_servo_rs.control_ki1[i]                  =   is_b3m1170[i] ?     0 :    580 ;
-        xp_servo_rs.control_static_friction1[i]     =   is_b3m1170[i] ?     0 :    100 ;
-        xp_servo_rs.control_dynamic_friction1[i]    =   is_b3m1170[i] ?     0 :     50 ;
-        xp_servo_rs.control_kp2[i]                  =   is_b3m1170[i] ? 42000 : 100000 ;
-        xp_servo_rs.control_kd2[i]                  =   is_b3m1170[i] ?   750 :    500 ;
-        xp_servo_rs.control_ki2[i]                  =   is_b3m1170[i] ?  6000 :  10000 ;
-        xp_servo_rs.control_static_friction2[i]     =   is_b3m1170[i] ?     0 :    100 ;
-        xp_servo_rs.control_dynamic_friction2[i]    =   is_b3m1170[i] ?    50 :     50 ;
-
-		xv_servo_rs.goal_position[i]		=
-		xv_servo_rs.present_position[i]     =
-		xv_servo_rs.present_temp[i]         =
-		xv_servo_rs.present_current[i]      =	0;
-	}
-	xp_servo_rs.gain_preset[ARM_PITCH_R]    =	B3M_CONTROL_GAIN_PRESET_LOW;
-	xp_servo_rs.gain_preset[ARM_ROLL_R]     =	B3M_CONTROL_GAIN_PRESET_LOW;
-	xp_servo_rs.gain_preset[ARM_PITCH_L]    =	B3M_CONTROL_GAIN_PRESET_LOW;
-	xp_servo_rs.gain_preset[ARM_ROLL_L]     =	B3M_CONTROL_GAIN_PRESET_LOW;
-	xp_servo_rs.gain_preset[LEG_ROLL_R]     =	B3M_CONTROL_GAIN_PRESET_HIGH;
-	xp_servo_rs.gain_preset[LEG_ROLL_L]     =	B3M_CONTROL_GAIN_PRESET_HIGH;
-	xp_servo_rs.gain_preset[LEG_PITCH_R]	=	B3M_CONTROL_GAIN_PRESET_HIGH;
-	xp_servo_rs.gain_preset[LEG_PITCH_L]	=	B3M_CONTROL_GAIN_PRESET_HIGH;
-	xp_servo_rs.gain_preset[FOOT_ROLL_R]	=	B3M_CONTROL_GAIN_PRESET_HIGH;
-	xp_servo_rs.gain_preset[FOOT_ROLL_L]	=	B3M_CONTROL_GAIN_PRESET_HIGH;
 }

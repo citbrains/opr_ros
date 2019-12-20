@@ -12,12 +12,18 @@ $ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/rob
 ```
 $ roslaunch opr_bringup simulation.launch
 ```
+* To launch real robot
+```
+$ roslaunch opr_bringup gankenkun_v3.launch
+```
 ## Package Structure
 ```
 opr_bringup
 |-CMakeLists.txt
 |-launch/
   |-display_xacro.launch
+  |-gankenkun_v3.launch
+  |-simulation.launch
 |-package.xml
 |-README.md
 ```

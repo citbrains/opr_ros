@@ -31,7 +31,6 @@
 #include	"motion.h"
 #include	"gyro.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 #include 	"mvtbl.h"
 
 char 			sfmt[256];
@@ -373,12 +372,14 @@ void	joy( void )
 
 			// write battery voltage * 100
 			if(mode_motion == MOTION_NONE){
+                /*
 				struct ServoStatus s;
 				ad_volt[3] = B3MGetServoStatus(18, &s) == 0 ? s.voltage * 100 : 0;
 				printf("voltage 1: %f\n", s.voltage);
 				if(5<s.voltage && s.voltage<11.1){
 					system("aplay sound/lowvoltage.wav &");
 				}
+                */
 			}else{
 				ad_volt[3] = 9999;
 			}

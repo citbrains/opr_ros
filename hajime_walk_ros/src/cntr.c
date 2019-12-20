@@ -24,7 +24,6 @@
 #include	"calc_deg.h"
 #include	"serv.h"
 #include 	"servo_rs.h"
-#include	"b3m.h"
 #include	"sq_walk.h"
 #include	"mvtbl.h"
 #include	"sq_straight.h"

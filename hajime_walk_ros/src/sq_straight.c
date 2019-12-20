@@ -22,7 +22,6 @@
 #include	"kine.h"
 #include	"motion.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 
 short flag_md_straight_end;				// mode‚ÌI—¹ƒtƒ‰ƒO
 //short mode_sq_straight;

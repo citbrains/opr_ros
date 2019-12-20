@@ -60,7 +60,6 @@ extern "C" {
 
 #include    "acc.h"
 #include    "gyro.h"
-#include    "b3m.h"
 }
 
 #define PARAM_TABLE_OFFSET 26
@@ -820,9 +819,6 @@ int main( int argc, char *argv[] )
 
     m_rateTimer = m_displayTimer = RTMath::currentUSecsSinceEpoch();
 
-
-    RSOpen(servo_port);
-    B3MTorqueALLDown();
     */
 
     // loop start

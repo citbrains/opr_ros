@@ -30,7 +30,6 @@
 #include	"sq_motion.h"
 #include	"acc.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 #include	"joy.h"
 
 /*--------------------------------------*/

@@ -20,7 +20,6 @@
 #include	"motion.h"
 #include	"calc_mv.h"
 #include	"servo_rs.h"
-#include	"b3m.h"
 #include	"sq_walk.h"
 #include	"sq_straight.h"
 #include	"sq_ready.h"
@@ -111,7 +110,7 @@ void 	serv( void )
 	xv_ref.d[SPARE27]		=	xv_ref.d_ref[SPARE27];	//	spare
 	xv_ref.d[SPARE28]		=	xv_ref.d_ref[SPARE28];	//	spare
 
-
+#if 0
 	for( i=0; i<SERV_NUM; i++ )
 	{
 		xv_sv[i].d	=	(long)(xv_ref.d[i] * 100);
@@ -132,6 +131,7 @@ void 	serv( void )
 	}
 	xv_servo_rs.goal_position[LEG_ROLL_R] *= REDUCTION_RATION;
 	xv_servo_rs.goal_position[LEG_ROLL_L] *= REDUCTION_RATION;
+#endif
 }
 
 
