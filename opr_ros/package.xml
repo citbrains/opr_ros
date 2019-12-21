@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>opr_ros</name>
+  <version>0.0.0</version>
+  <description>The opr_ros package</description>
+  <maintainer email="supratmanjoshua@gmail.com">Joshua Supratman</maintainer>
+  <license>Apache License, Version 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>hajime_walk_ros</build_depend>
+  <build_depend>opr_bringup</build_depend>
+  <build_depend>opr_description</build_depend>
+  <build_depend>opr_gazebo</build_depend>
+  <build_depend>opr_kondo_driver</build_depend>
+  <build_depend>opr_ros_control</build_depend>
+
+</package>

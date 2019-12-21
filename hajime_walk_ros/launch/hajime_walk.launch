@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="hajime_walk" pkg="hajime_walk_ros" type="hajime_walk" output="screen">
+        <rosparam file="$(find hajime_walk_ros)/config/eeprom_list.yaml" command="load" />
+        <param name="motion_path" value="$(find hajime_walk_ros)/motions" />
+    </node>
+</launch>
+

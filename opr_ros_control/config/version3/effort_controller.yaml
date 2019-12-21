@@ -1,0 +1,113 @@
+head_yaw_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: head_yaw_joint
+
+left_shoulder_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_shoulder_pitch_joint
+
+left_shoulder_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_shoulder_roll_joint
+
+left_elbow_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_elbow_pitch_joint
+
+left_waist_yaw_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_waist_yaw_joint
+
+left_waist_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_waist_roll_joint
+
+left_waist_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_waist_pitch_joint
+
+left_knee_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_knee_pitch_joint
+
+left_ankle_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_ankle_pitch_joint
+
+left_ankle_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: left_ankle_roll_joint
+
+right_shoulder_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_shoulder_pitch_joint
+
+right_shoulder_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_shoulder_roll_joint
+
+right_elbow_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_elbow_pitch_joint
+
+right_waist_yaw_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_waist_yaw_joint
+
+right_waist_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_waist_roll_joint
+
+right_waist_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_waist_pitch_joint
+
+right_knee_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_knee_pitch_joint
+
+right_ankle_pitch_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_ankle_pitch_joint
+
+right_ankle_roll_controller:
+  type: effort_controllers/JointPositionController
+  publish_rate: 10
+  pid: {p: 100.0, i: 0.01, d: 100.0}
+  joint: right_ankle_roll_joint
