@@ -29,7 +29,7 @@ $ roslaunch hajime_walk_ros hajime_walk.launch
 * /hajime_walk/motion
   * Topic to receive motion command
   * Topic type: `hajime_walk/WalkCommand`
-    * int32 `no_motion`: motion number
+    * int32 `motion_id`: motion id
     * int32 `num_repeat`: number of motions to repeat (0 is infinite)
 
 ### Published topics
@@ -99,4 +99,5 @@ opr_bringup
   |-sq_start.c
   |-sq_straight.c
   |-sq_walk.c
+  |-var_init.c
 ```
