@@ -14,7 +14,7 @@ $ roslaunch hajime_walk_ros hajime_walk.launch
 
 * /hajime_walk/walk
   * Topic to receive walk command
-  * Topic type: `hajime_walk/WalkCommand`
+  * Topic type: `opr_msgs/HajimeWalk`
     * int32 `num_step`: number of steps to take (0 is infinite)
     * int32 `period`: walking period
     * int32 `stride_x`: stride width
@@ -28,7 +28,7 @@ $ roslaunch hajime_walk_ros hajime_walk.launch
 
 * /hajime_walk/motion
   * Topic to receive motion command
-  * Topic type: `hajime_walk/WalkCommand`
+  * Topic type: `opr_msgs/HajimeMotion`
     * int32 `motion_id`: motion id
     * int32 `num_repeat`: number of motions to repeat (0 is infinite)
 
@@ -74,9 +74,6 @@ opr_bringup
   |-var.h
 |-launch/
   |-hajime_walk.launch
-|-msg/
-  |-MotionCommand.msg
-  |-WalkCommand.msg
 |-package.xml
 |-README.md
 |-src/

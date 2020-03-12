@@ -59,6 +59,8 @@ $ roslaunch hajime_walk_ros hajime_walk.launch
   * collection of gazebo related files
 * opr_kondo_driver
   * collection of B3M servo motor related files
+* opr_msgs
+  * collection of custom ROS messages
 * opr_ros
   * package to build other package
 * opr_ros_control

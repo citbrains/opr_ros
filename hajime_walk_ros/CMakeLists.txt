@@ -5,19 +5,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   sensor_msgs
-  message_generation
   roslib
-)
-
-add_message_files(
-  FILES
-  WalkCommand.msg
-  MotionCommand.msg
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs
+  opr_msgs
 )
 
 set(CMAKE_CXX_STANDARD 11)
@@ -43,7 +32,7 @@ add_definitions(-D_AFXDLL -DSIM -D_CRT_SECURE_NO_WARNINGS)
 
 catkin_package(
     INCLUDE_DIRS include
-    CATKIN_DEPENDS roscpp sensor_msgs std_msgs message_runtime
+    CATKIN_DEPENDS roscpp sensor_msgs std_msgs
 )
 
 include_directories(
@@ -72,8 +61,6 @@ src/var_init.c            src/pc_motion.cpp
 add_executable(hajime_walk
 	${HR46_B3M_SRCS}
 )
-
-add_dependencies(hajime_walk ${PROJECT_NAME}_generate_messages_cpp)
 
 target_link_libraries(hajime_walk
 	${Boost_LIBRARIES}

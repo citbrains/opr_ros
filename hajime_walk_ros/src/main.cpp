@@ -27,8 +27,8 @@
 #include <std_msgs/Bool.h>
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_datatypes.h>
-#include "hajime_walk_ros/WalkCommand.h"
-#include "hajime_walk_ros/MotionCommand.h"
+#include "opr_msgs/HajimeMotion.h"
+#include "opr_msgs/HajimeWalk.h"
 
 #include    <stdio.h>
 #include    <assert.h>
@@ -616,7 +616,7 @@ void load_eeprom()
 
 }
 
-void motionCallback(const hajime_walk_ros::MotionCommand::ConstPtr &msg)
+void motionCallback(const opr_msgs::HajimeMotion::ConstPtr &msg)
 {
     motion_flag = true;
     std::string s = std::to_string(msg->motion_id);
@@ -650,7 +650,7 @@ void cancelCallback(const std_msgs::Bool::ConstPtr &msg)
     stride_th = 0;
 }
 
-void walkCallback(const hajime_walk_ros::WalkCommand::ConstPtr &msg)
+void walkCallback(const opr_msgs::HajimeWalk::ConstPtr &msg)
 {
     motion_flag = false;
     walk_cmd = 'A';
