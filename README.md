@@ -65,3 +65,5 @@ $ roslaunch hajime_walk_ros hajime_walk.launch
   * package to build other package
 * opr_ros_control
   * collection of ros controllers
+* opr_user_interface
+  * collection of user interface files

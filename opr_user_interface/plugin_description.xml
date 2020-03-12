@@ -1,0 +1,5 @@
+<library path="lib/libopr_user_interface">
+    <class name="HuSendCom" type="Panel" base_class_type="rviz::Panel">
+        <description>OPR Hajime Walk Command </description>
+    </class>
+</library>
