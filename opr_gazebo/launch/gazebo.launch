@@ -22,7 +22,7 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 
 	<!-- run python script to the send a service call to gazebo_ros to spawn a URDF robot-->
-	<node name="urdf_spwaner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot1 -param robot_description -z 0.1" />
+	<node name="urdf_spwaner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot1 -param robot_description -x -0.6 -z 0.1" />
 
     <!-- convert joint states to tf transform for rviz etc -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
