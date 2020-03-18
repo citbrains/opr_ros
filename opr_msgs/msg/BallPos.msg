@@ -1,2 +1,2 @@
-int32 x
-int32 y
+geometry_msgs/Pose2D global
+geometry_msgs/Pose2D local
