@@ -16,4 +16,7 @@
         <arg name="paused" value="false" />
     </include>
 
+    <!-- publish ground truth -->
+    <include file="$(find opr_gazebo)/launch/ground_truth_publisher.launch" />
+
 </launch>

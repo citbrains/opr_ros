@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="get_selfpos" default="true" />
+	<arg name="get_ballpos" default="true" />
+	<arg name="robot_name" default="robot1" />
+
+    <node name="ground_truth_publisher" pkg="opr_gazebo" type="ground_truth_publisher" >
+        <param name="get_selfpos" value="$(arg get_selfpos)" />
+        <param name="get_ballpos" value="$(arg get_ballpos)" />
+        <param name="robot_name" value="$(arg robot_name)" />
+    </node>
+
+</launch>
+
