@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="image_topic" default="/image_raw" />
+    <arg name="device" default="/dev/video0" />
+
+    <include file="$(find opr_vision)/launch/camera_nodelet.launch">
+        <arg name="device" value="$(arg device)" />
+    </include>
+
+    <include file="$(find darknet_ros)/launch/yolo_v3.launch">
+        <arg name="image" value="$(arg image_topic)" />
+    </include>
+
+</launch>
