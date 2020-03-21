@@ -3,6 +3,10 @@
 ## Overview
 * collection of GUI and custom RViz Panel to interface with the Open Platform Robot
 
+## Available Interface
+* HuSendCom
+  * GUI for robot movement
+
 ## Usage
 * GUI only
 ```
