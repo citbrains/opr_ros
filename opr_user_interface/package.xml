@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>opr_user_interface</name>
+  <version>0.0.0</version>
+  <description>OPR user interface package</description>
+
+  <maintainer email="supratmanjoshua@gmail.com">Joshua Supratman</maintainer>
+  <license>Apache License, Version2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>qtbase5-dev</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rviz</build_depend>
+  <build_depend>opr_msgs</build_depend>
+
+  <build_export_depend>roscpp</build_export_depend>
+
+  <exec_depend>libqt5-core</exec_depend>
+  <exec_depend>libqt5-gui</exec_depend>
+  <exec_depend>libqt5-widgets</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rviz</exec_depend>
+
+  <export>
+    <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>
