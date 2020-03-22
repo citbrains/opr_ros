@@ -1,11 +1,11 @@
-/*******************************************************************
- * Copyright (c) 2012 Kiyoshi Irie  All Rights Reserved.
+/****************************************************************************
+ * KSerialPort
+ * Copyright (C) 2012 Kiyoshi Irie
  *
- * @file KSerialPort.h
- * @brief Serial Port I/O
- * @author Kiyoshi Irie
- * @date 2012-02-23
- *******************************************************************/
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at https://mozilla.org/MPL/2.0/.
+ ****************************************************************************/
 
 #ifndef KSERIALPORT_H_
 #define KSERIALPORT_H_
