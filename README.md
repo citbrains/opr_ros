@@ -47,6 +47,10 @@ First launch either the **Gazebo Simulation** or **Real Robot** then launch the 
 ```
 $ roslaunch hajime_walk_ros hajime_walk.launch
 ```
+Example: stepping on the spot
+```
+$ rostopic pub /hajime_walk/walk opr_msgs/HajimeWalk -- '0' '0' '0' '0' '0'
+```
 
 ## Package Description
 * hajime_walk_ros
