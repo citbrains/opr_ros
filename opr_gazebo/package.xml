@@ -8,26 +8,12 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>roscpp</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>opr_msgs</build_depend>
-  <build_depend>gazebo_ros</build_depend>
-  <build_depend>gazebo_ros_control</build_depend>
-  <build_depend>gazebo_msgs</build_depend>
-
-  <build_export_depend>roscpp</build_export_depend>
-  <build_export_depend>geometry_msgs</build_export_depend>
-  <build_export_depend>opr_msgs</build_export_depend>
-  <build_export_depend>gazebo_ros</build_export_depend>
-  <build_export_depend>gazebo_ros_control</build_export_depend>
-  <build_export_depend>gazebo_msgs</build_export_depend>
-
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>opr_msgs</exec_depend>
-  <exec_depend>gazebo_ros</exec_depend>
-  <exec_depend>gazebo_ros_control</exec_depend>
-  <exec_depend>gazebo_msgs</exec_depend>
+  <depend>roscpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>opr_msgs</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros_control</depend>
+  <depend>gazebo_msgs</depend>
 
   <export>
     <gazebo_ros gazebo_media_path="${prefix}/worlds" />
