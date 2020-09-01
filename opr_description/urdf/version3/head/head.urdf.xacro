@@ -6,7 +6,7 @@
         <parent link="body_link" />
         <child link="head_yaw_link" />
         <origin xyz="0 0 0.09475" rpy="0 0 0" />
-        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
