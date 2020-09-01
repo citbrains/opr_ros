@@ -36,7 +36,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 ${PI} ${PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/shoulder.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/shoulder.stl" />
             </geometry>
         </visual>
         <collision>
@@ -57,7 +57,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 ${PI/2} 0"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/arm.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/arm.stl" />
             </geometry>
         </visual>
         <collision>
@@ -77,7 +77,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${PI} 0 ${PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/hand.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/hand.stl" />
             </geometry>
         </visual>
         <collision>

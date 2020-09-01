@@ -111,7 +111,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${-PI/2} 0 ${PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/waist_yaw.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/waist_yaw.stl" />
             </geometry>
         </visual>
         <collision>
@@ -131,7 +131,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${-PI/2} ${-PI/2} 0"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/waist_roll_right.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/waist_roll_right.stl" />
             </geometry>
         </visual>
         <collision>
@@ -151,7 +151,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${PI/2} 0 ${-PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/slider_crank.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/slider_crank.stl" />
             </geometry>
         </visual>
         <collision>
@@ -171,7 +171,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${-PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/waist_pitch.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/waist_pitch.stl" />
             </geometry>
         </visual>
         <collision>
@@ -191,7 +191,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/waist_pitch_mimic.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/waist_pitch_mimic.stl" />
             </geometry>
         </visual>
         <collision>
@@ -211,7 +211,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${PI} ${PI} 0"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/knee_pitch_right.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/knee_pitch_right.stl" />
             </geometry>
         </visual>
         <collision>
@@ -231,7 +231,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${-PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/shin_pitch.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/shin_pitch.stl" />
             </geometry>
         </visual>
         <collision>
@@ -251,7 +251,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${PI} 0 ${PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/shin_pitch_mimic.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/shin_pitch_mimic.stl" />
             </geometry>
         </visual>
         <collision>
@@ -271,7 +271,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/independent_pitch.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/independent_pitch.stl" />
             </geometry>
         </visual>
         <collision>
@@ -291,7 +291,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${-PI/2}"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/ankle_pitch_right.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/ankle_pitch_right.stl" />
             </geometry>
         </visual>
         <collision>
@@ -311,7 +311,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="${-PI/2} ${-PI/2} 0"/>
             <geometry>
-                <mesh filename="package://opr_description/meshes/version3/DAE/ankle_roll_right.dae" />
+                <mesh filename="package://opr_description/meshes/version3/STL/ankle_roll_right.stl" />
             </geometry>
         </visual>
         <collision>
