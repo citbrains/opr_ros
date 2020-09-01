@@ -7,12 +7,15 @@
   <license>Apache License, Version 2.0</license>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>hajime_walk_ros</build_depend>
-  <build_depend>opr_bringup</build_depend>
-  <build_depend>opr_description</build_depend>
-  <build_depend>opr_gazebo</build_depend>
-  <build_depend>opr_kondo_driver</build_depend>
-  <build_depend>opr_msgs</build_depend>
-  <build_depend>opr_ros_control</build_depend>
+  <exec_depend>hajime_walk_ros</exec_depend>
+  <exec_depend>opr_bringup</exec_depend>
+  <exec_depend>opr_description</exec_depend>
+  <exec_depend>opr_gazebo</exec_depend>
+  <exec_depend>opr_kondo_driver</exec_depend>
+  <exec_depend>opr_msgs</exec_depend>
+  <exec_depend>opr_ros_control</exec_depend>
 
+  <export>
+    <metapackage/>
+  </export>
 </package>

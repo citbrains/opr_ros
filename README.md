@@ -1,5 +1,5 @@
 # opr_ros
-ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Kinetic.
+ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Melodic.
 
 ## Installation
 1. Install ros
@@ -19,12 +19,12 @@ $ git clone https://github.com/citbrains/opr_ros.git
 $ wstool init .
 $ wstool merge opr_ros/opr_ros.rosinstall
 $ wstool update
-$ rosdep install --from-paths opr_ros --ignore-src --rosdistro kinetic
+$ rosdep install --from-paths . --ignore-src --rosdistro melodic -r -y
 ```
 4. build and source
 ```
 $ cd ~/catkin_ws
-$ catkin build opr_ros
+$ catkin build 
 $ catkin source
 ```
 
