@@ -22,11 +22,13 @@
 
 #include <ros/ros.h>
 #include <ros/package.h>
+#include <nav_msgs/Odometry.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/Bool.h>
 #include <sensor_msgs/Imu.h>
 #include <tf/transform_datatypes.h>
+#include <tf/tfMessage.h>
 #include "opr_msgs/HajimeMotion.h"
 #include "opr_msgs/HajimeWalk.h"
 
@@ -695,10 +697,13 @@ int main( int argc, char *argv[] )
     ros::init(argc, argv, "hajime_walk");
     ros::NodeHandle nh;
 
+    // initialize subscriber 
     ros::Subscriber sub_walk = nh.subscribe("/hajime_walk/walk", 10, walkCallback);
     ros::Subscriber sub_cancel = nh.subscribe("/hajime_walk/cancel", 10, cancelCallback);
     ros::Subscriber sub_motion = nh.subscribe("/hajime_walk/motion", 10, motionCallback);
     ros::Subscriber sub_imu = nh.subscribe("/imu/data", 1000, imuCallback);
+
+    // initialize publisher
     ros::Publisher left_ankle_pitch_pub = nh.advertise<std_msgs::Float64>("/left_ankle_pitch_controller/command", 1);
     ros::Publisher left_ankle_roll_pub = nh.advertise<std_msgs::Float64>("/left_ankle_roll_controller/command", 1);
     ros::Publisher left_elbow_pitch_pub = nh.advertise<std_msgs::Float64>("/left_elbow_pitch_controller/command", 1);
@@ -725,24 +730,70 @@ int main( int argc, char *argv[] )
     serv_init();              // サーボモータの初期化
     calc_mv_init();             // 動きの計算の初期化
 
+    // load motion paths
     ros::NodeHandle private_nh("~");
     std::string motion_path_;
     private_nh.param("motion_path", motion_path_, std::string("motions"));
     load_pc_motion(motion_path_.c_str());
 
+    // load hajime walk config
     load_eeprom();
 
     ros::Rate rate(100); //10 ms
     //ros::AsyncSpinner spinner(1);
     //spinner.start();
-    
+   
+    // TODO: odometry publisher
+    ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 1);
+    ros::Publisher tf_odom_pub = nh.advertise<tf::tfMessage>("/tf", 1);
+
+    // TODO' initialize odometry message
+    nav_msgs::Odometry odom;
+    odom.header.frame_id = "odom";
+    odom.child_frame_id = "base_link";
+    odom.pose.pose.position.z = 0;
+    float pose_covariance[6] = {0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0};
+    odom.pose.covariance = {
+        pose_covariance[0], 0.0, 0.0, 0.0, 0.0, 0.0,
+        0.0, pose_covariance[1], 0.0, 0.0, 0.0, 0.0,
+        0.0, 0.0, pose_covariance[2], 0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0, pose_covariance[3], 0.0, 0.0,
+        0.0, 0.0, 0.0, 0.0, pose_covariance[4], 0.0,
+        0.0, 0.0, 0.0, 0.0, 0.0, pose_covariance[5] };
+    odom.twist.twist.linear.y = 0;
+    odom.twist.twist.linear.z = 0;
+    odom.twist.twist.angular.x = 0;
+    odom.twist.twist.angular.y = 0;
+    float twist_covariance[6] = {0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0};
+    odom.twist.covariance = {
+        twist_covariance[0], 0.0, 0.0, 0.0, 0.0, 0.0,
+        0.0, twist_covariance[1], 0.0, 0.0, 0.0, 0.0,
+        0.0, 0.0, twist_covariance[2], 0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0, twist_covariance[3], 0.0, 0.0,
+        0.0, 0.0, 0.0, 0.0, twist_covariance[4], 0.0,
+        0.0, 0.0, 0.0, 0.0, 0.0, twist_covariance[5] };
+
+    // TODO' initialize odometry tf message
+    bool enable_odom_tf_ = true;
+    tf::tfMessage tf_odom;
+    tf_odom.transforms.resize(1);
+    tf_odom.transforms[0].header.frame_id = "odom";
+    tf_odom.transforms[0].child_frame_id = "base_link";
+    tf_odom.transforms[0].transform.translation.z = 0.0;
+
+    const float degree_to_radian = M_PI / 180.0;
+
     while(ros::ok()){
+        // execute motion
         if(!motion_flag){
             set_xv_comm(&xv_comm, walk_cmd, num_step, stride_th, stride_x, period, stride_y);
             convert_bin(&xv_comm_bin, &xv_comm);
         }
+
+        // hajime walk control
         cntr();
-        
+       
+        // publish to left leg controller
         rad.data = -xv_ref.d[LEG_PITCH_L] * (M_PI/180);
         left_ankle_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[FOOT_ROLL_L] * (M_PI/180);
@@ -762,6 +813,7 @@ int main( int argc, char *argv[] )
         rad.data = -xv_ref.d[LEG_YAW_L] * (M_PI/180);
         left_waist_yaw_pub.publish(rad); 
 
+        // publish to right leg controller
         rad.data = -xv_ref.d[LEG_PITCH_R] * (M_PI/180);
         right_ankle_pitch_pub.publish(rad); 
         rad.data = -xv_ref.d[FOOT_ROLL_R] * (M_PI/180);
@@ -780,7 +832,25 @@ int main( int argc, char *argv[] )
         right_waist_roll_pub.publish(rad); 
         rad.data = -xv_ref.d[LEG_YAW_R] * (M_PI/180);
         right_waist_yaw_pub.publish(rad); 
-        
+       
+        //publish odom, odom tf
+        const geometry_msgs::Quaternion orientation(
+              tf::createQuaternionMsgFromYaw(xv_odometry.rotZ * degree_to_radian));
+        odom.header.stamp = ros::Time::now();
+        odom.pose.pose.position.x = xv_odometry.moveX * 0.001;
+        odom.pose.pose.position.y = xv_odometry.moveY * 0.001;
+        odom.pose.pose.orientation = orientation;
+        odom_pub.publish(odom);
+        //odom.pose.twist.twist.linear.x = ???; // robot translation vel
+        //odom.pose.twist.twist.angular.z = ???; // robot rotation vel
+        if(enable_odom_tf_){
+            tf_odom.transforms[0].header.stamp = ros::Time::now();
+            tf_odom.transforms[0].transform.translation.x = xv_odometry.moveX * 0.001;
+            tf_odom.transforms[0].transform.translation.y = xv_odometry.moveY * 0.001;
+            tf_odom.transforms[0].transform.rotation = orientation;
+            tf_odom_pub.publish(tf_odom);
+        }
+
         ros::spinOnce();
         rate.sleep();
     }
