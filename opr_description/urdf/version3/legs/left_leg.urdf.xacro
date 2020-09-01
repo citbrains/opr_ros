@@ -6,7 +6,7 @@
         <parent link="body_link" />
         <child link="left_waist_yaw_link" />
         <origin xyz="0.005 0.044 -0.0725" rpy="0 0 0" />
-        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -14,7 +14,7 @@
         <parent link="left_waist_yaw_link" />
         <child link="left_waist_roll_link" />
         <origin xyz="0.024975 0 -0.055" rpy="0 ${PI/2} 0" />
-        <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -23,7 +23,7 @@
         <child link="left_slider_crank_link" />
         <origin xyz="-0.018 0 -0.091475" rpy="0 0 0" />
         <mimic joint="left_waist_roll_joint" multiplier="-2" offset="0" />
-        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="2.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -31,7 +31,7 @@
         <parent link="left_waist_roll_link" />
         <child link="left_waist_pitch_link" />
         <origin xyz="0 0 -0.025" rpy="${-PI/2} 0 0" />
-        <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -40,7 +40,7 @@
         <child link="left_waist_pitch_mimic_link" />
         <origin xyz="0.02 0 -0.057" rpy="${-PI/2} 0 0" />
         <mimic joint="left_waist_pitch_joint" multiplier="1" offset="0" />
-        <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -49,7 +49,7 @@
         <child link="left_knee_pitch_link" />
         <origin xyz="0.1 0 0" rpy="0 0 0" />
         <mimic joint="left_waist_pitch_joint" multiplier="-1" offset="0" />
-        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -57,7 +57,7 @@
         <parent link="left_knee_pitch_link" />
         <child link="left_shin_pitch_link" />
         <origin xyz="0.057 0 0" rpy="0 0 0" />
-        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -66,7 +66,7 @@
         <child link="left_shin_pitch_mimic_link" />
         <origin xyz="0.037 0.032 0" rpy="0 0 0" />
         <mimic joint="left_knee_pitch_joint" multiplier="1" offset="0" />
-        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -75,7 +75,7 @@
         <child link="left_independent_pitch_link" />
         <origin xyz="0.1 0 0" rpy="0 0 0" />
         <mimic joint="left_knee_pitch_joint" multiplier="-1" offset="0" />
-        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -83,7 +83,7 @@
         <parent link="left_independent_pitch_link" />
         <child link="left_ankle_pitch_link" />
         <origin xyz="0.0001 0 0" rpy="0 0 0" />
-        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -91,7 +91,7 @@
         <parent link="left_ankle_pitch_link" />
         <child link="left_ankle_roll_link" />
         <origin xyz="0 0.0325 0" rpy="${PI/2} 0 0"/>
-        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="1.0" />
+        <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 

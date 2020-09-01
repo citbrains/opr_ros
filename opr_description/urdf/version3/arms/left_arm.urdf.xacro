@@ -6,7 +6,7 @@
         <parent link="body_link" />
         <child link="left_shoulder_link" />
         <origin xyz="0.0 0.06 0.072" rpy="${-PI/2} 0 0" />
-        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -14,7 +14,7 @@
         <parent link="left_shoulder_link" />
         <child link="left_upper_arm_link" />
         <origin xyz="0 0 0.0315" rpy="0 ${PI/2} 0" />
-        <limit effort="1000" lower="0" upper="${PI}" velocity="1.0" />
+        <limit effort="1000" lower="0" upper="${PI}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
@@ -22,7 +22,7 @@
         <parent link="left_upper_arm_link" />
         <child link="left_lower_arm_link" />
         <origin xyz="0 0.109 0" rpy="0 ${-PI/2} 0" />
-        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="1.0" />
+        <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8" />
         <axis xyz="0 0 1" />
     </joint>
 
