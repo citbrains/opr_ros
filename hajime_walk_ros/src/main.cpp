@@ -739,7 +739,8 @@ int main( int argc, char *argv[] )
     // load hajime walk config
     load_eeprom();
 
-    ros::Rate rate(100); //10 ms
+    float hz = 100;
+    ros::Rate rate(hz); //10 ms
     //ros::AsyncSpinner spinner(1);
     //spinner.start();
    
@@ -782,6 +783,9 @@ int main( int argc, char *argv[] )
     tf_odom.transforms[0].transform.translation.z = 0.0;
 
     const float degree_to_radian = M_PI / 180.0;
+    float prev_odom_x = 0.0;
+    float prev_odom_y = 0.0;
+    float prev_rot_z = 0.0;
 
     while(ros::ok()){
         // execute motion
@@ -834,15 +838,19 @@ int main( int argc, char *argv[] )
         right_waist_yaw_pub.publish(rad); 
        
         //publish odom, odom tf
-        const geometry_msgs::Quaternion orientation(
-              tf::createQuaternionMsgFromYaw(xv_odometry.rotZ * degree_to_radian));
+        const geometry_msgs::Quaternion orientation(tf::createQuaternionMsgFromYaw(-xv_odometry.rotZ * degree_to_radian));
         odom.header.stamp = ros::Time::now();
-        odom.pose.pose.position.x = xv_odometry.moveX * 0.001;
-        odom.pose.pose.position.y = xv_odometry.moveY * 0.001;
+        odom.pose.pose.position.x = xv_odometry.moveX * 0.001; // mm -> m
+        odom.pose.pose.position.y = xv_odometry.moveY * 0.001; // mm -> m
         odom.pose.pose.orientation = orientation;
         odom_pub.publish(odom);
-        //odom.pose.twist.twist.linear.x = ???; // robot translation vel
-        //odom.pose.twist.twist.angular.z = ???; // robot rotation vel
+        odom.twist.twist.linear.x = (xv_odometry.moveX - prev_odom_x) / (1/hz); 
+        odom.twist.twist.linear.y = (xv_odometry.moveY - prev_odom_y) / (1/hz); 
+        odom.twist.twist.angular.z = (-(xv_odometry.rotZ - prev_rot_z) * degree_to_radian) / (1/hz);
+        prev_odom_x = xv_odometry.moveX;
+        prev_odom_y = xv_odometry.moveX;
+        prev_rot_z = xv_odometry.rotZ;
+
         if(enable_odom_tf_){
             tf_odom.transforms[0].header.stamp = ros::Time::now();
             tf_odom.transforms[0].transform.translation.x = xv_odometry.moveX * 0.001;
